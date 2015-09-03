@@ -15,7 +15,8 @@ def step_dicho(Vinit):
   Vplot=[]
 
   for n in range(NT):
-	  V,Vp,Vpp,etaZ,etaX=time_step(V,etaZ,etaX)
+	  V,etaZ,etaX=time_step(V,etaZ,etaX)
+	  Vp=d_rho(V)
 	  if min(Vp)>0:
 	    Vpre=V
 	    Vprepre=Vpre

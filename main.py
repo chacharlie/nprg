@@ -8,13 +8,16 @@ from step_dicho import *
 
 Ndicho=1
 
-#vhigh=0.
-#vlow=-0.05
-vhigh=-0.026953125
-vlow=-0.0271484375
+vhigh=-0.1209
+vlow=-0.1209
+vmid=(vhigh+vlow)/2.
+
+# Pour beta=0
+#vhigh=-0.026953125
+#vlow=-0.0271484375
 
 folderPath='results/N'+str(int(NN))+'d'+str(int(dim))+'alpha'+str(int(alpha))+'NT'+str(NT)+'Nrho'+str(Nrho)+'NQ'+str(NQ)+'/'
-fileName=folderPath+'Veta-'+str(Ndicho)+'-'+str(Nomeg)+'-'+str(Lomeg)+'-'+str(beta)
+fileName=folderPath+'Veta-'+str(Ndicho)+'-'+str(Nomeg)+'-'+str(Lomeg)+'-'+str(beta)+'-'+str(vmid)
 etaZResults=[]
 etaXResults=[]
 Vresults=[]
