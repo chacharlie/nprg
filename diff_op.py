@@ -39,20 +39,3 @@ def d2_rho(F):
 	# Fpp[2:-2] = -F[0:-4]/12.+4./3*F[1:-3]-5./2*F[2:-2]+4./3*F[3:-1]-1./12*F[4:]
 	# return Fpp/drho**2
 	return gradient(gradient(F))/drho**2
-	
-# double discrete_deriv_2(double *f, double delta, int i_min, int i_max, int k)
-# {
-  # double D=DSQR(delta);
-  # if (i_max-i_min < 4) nrerror("i_max-i_min<4 in function discrete_deriv_2");
-  # if (k >= i_min+2 && k <= i_max-2)
-    # return (-(f[k+2]+f[k-2])+16.*(f[k+1]+f[k-1])-30.*f[k])/(12.*D);
-  # else if (k == i_max-1)
-    # return (11.*f[k+1]-20.*f[k]+6.*f[k-1]+4.*f[k-2]-f[k-3])/(12.*D);
-  # else if (k == i_max)
-    # return (35.*f[k]-104.*f[k-1]+114.*f[k-2]-56.*f[k-3]+11.*f[k-4])/(12.*D);
-  # else if (k == i_min)
-    # return (35.*f[k]-104.*f[k+1]+114.*f[k+2]-56.*f[k+3]+11.*f[k+4])/(12.*D);
-  # else if (k == i_min+1)
-    # return (11.*f[k-1]-20.*f[k]+6.*f[k+1]+4.*f[k+2]-f[k+3])/(12.*D);
-  # else nrerror("function discrete_deriv_2: k not in [i_min,i_max]");
-# }
