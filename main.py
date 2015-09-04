@@ -6,10 +6,10 @@ from time import time
 from global_variables import *
 from step_dicho import *
 
-Ndicho=1
+Ndicho=2
 
-vhigh=-0.1209
-vlow=-0.1209
+vhigh=-0.12092
+vlow=-0.12093
 vmid=(vhigh+vlow)/2.
 
 # Pour beta=0

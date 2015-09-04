@@ -33,7 +33,9 @@ def step_dicho(Vinit):
 		  etaXPlot.append(etaX)
 		  Vplot.append(V)
 		  
-  if min(Vpre[15:]-Vprepre[15:])>0:
+#  if min(Vpre[15:]-Vprepre[15:])>0:
+#    phase=1
+  if Vpre[0]>1:
     phase=1
   #else:
     #temp= np.sign(np.gradient(etaZPlot))

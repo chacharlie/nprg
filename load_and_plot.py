@@ -3,17 +3,17 @@ from numpy import *
 import  matplotlib.pyplot as plt
 #import os as os
 
-Ndicho=1
+Ndicho=2
 Nomeg=200
 Lomeg=50
 beta=0.1
-vmid=-0.1209
+vmid=-0.120925
 
 #currentPath=os.path.dirname(os.path.realpath(__file__))
 
 folderPath='results/N1d3alpha2NT40000Nrho30NQ50/'
 
-fileName=folderPath+'Veta-'+str(Ndicho)+'-'+str(Nomeg)+'-'+str(Lomeg)+'-'+str(beta)+'-'+str(vmid)
+fileName=folderPath+'Veta-'+str(Ndicho)+'-'+str(Nomeg)+'-'+str(Lomeg)+'-'+str(beta)+'-'+str(vmid)+'test'
 
 data=load(fileName+'.npz')
 matrixZ=data['etaZResults']
