@@ -7,9 +7,9 @@ from time_step import *
 def step_dicho(Vinit):
   
   V=Vinit
-  etaZ=0.1
-  etaX=0.1
-  phase=0
+  etaZ=0.01
+  etaX=0.01
+  #phase= NaN
   etaZPlot=[]
   etaXPlot=[]
   Vplot=[]
@@ -22,21 +22,21 @@ def step_dicho(Vinit):
 	    Vprepre=Vpre
 	  else:
 	    print "BREAK because of non-monotonity of V' in simu beta=",beta
+	    if Vpre[0]>0.:
+	    	phase=1
 	    break
-	  #if min(Vp)<0:
-	    #print "There might be a problem at t=",n*dt,"for simu beta=",beta 
-	  if abs(max(V))>10.:
-		  break
+	  if Vpre[0]<-0.7:
+	  	phase=0
+	  	break
+	  if Vpre[0]>0:
+	  	phase=1
+		break
 
 	  if(n%(100)==0):
 		  etaZPlot.append(etaZ)
 		  etaXPlot.append(etaX)
 		  Vplot.append(V)
 		  
-#  if min(Vpre[15:]-Vprepre[15:])>0:
-#    phase=1
-  if Vpre[0]>1:
-    phase=1
   #else:
     #temp= np.sign(np.gradient(etaZPlot))
     #temp2=temp[1:]-temp[:-1]

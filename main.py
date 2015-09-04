@@ -6,10 +6,10 @@ from time import time
 from global_variables import *
 from step_dicho import *
 
-Ndicho=2
+Ndicho=1
 
-vhigh=-0.12092
-vlow=-0.12093
+vhigh=-0.1
+vlow=-0.1
 vmid=(vhigh+vlow)/2.
 
 # Pour beta=0
@@ -21,13 +21,14 @@ fileName=folderPath+'Veta-'+str(Ndicho)+'-'+str(Nomeg)+'-'+str(Lomeg)+'-'+str(be
 etaZResults=[]
 etaXResults=[]
 Vresults=[]
+vmidResults=[]
 
 tsimu = time()
 for i in range(Ndicho):
   print "i=",i, " time =",(time()-tsimu),"for simu ",fileName
   vmid=(vhigh+vlow)/2.
   print "vmid=",vmid
-  Vinit=linspace(-0.7,1,Nrho)+vmid
+  Vinit=linspace(-0.3,0.7,Nrho)+vmid
   
   phase,etaZPlot,etaXPlot,Vplot=step_dicho(Vinit) #phase=0 : low temp, =1, high temp
   
@@ -39,10 +40,12 @@ for i in range(Ndicho):
   etaZResults.append(np.array(etaZPlot))
   etaXResults.append(np.array(etaXPlot))
   Vresults.append(np.array(Vplot))
+  vmidResults.append(vmid)
 
 
 etaZResults=np.array(etaZResults)
 etaXResults=np.array(etaXResults)
 Vresults=np.array(Vresults)
-np.savez(fileName,etaZResults=etaZResults,etaXResults=etaXResults,Vresults=Vresults)
+vmidResults=np.array(vmidResults)
+np.savez(fileName,etaZResults=etaZResults,etaXResults=etaXResults,Vresults=Vresults,vmidResults=vmidResults)
 print "SIMU beta=",beta," IS TERMINAOUCH after ",time()-tsimu,"seconds"

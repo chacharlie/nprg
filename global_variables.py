@@ -11,7 +11,7 @@ NT = 40000		# nombre de pas de temps (de RG)
 NQ = 50		# nombre de pas pour les impulsions
 Nomeg = 200	# nombre de pas pour les frequences
 Nrho= 30		# nombre de pas pour le potentiel
-rho0i = 14		# indice du potentiel pour l'evaluation de eta
+#rho0i = 14		# indice du potentiel pour l'evaluation de eta
 
 # geometrique
 T = -30.				# taille du domaine selon t
@@ -45,7 +45,7 @@ wOmeg=Lomeg*wOmegtemp
 
 # regulateurs
 alpha = 2.		# parametre du regulateur en impulsions
-beta = 0.1		# parametre du regulateur en frequences
+beta = 0.01		# parametre du regulateur en frequences
 regu = alpha/(exp(q**2)-1.)
 regup = -regu**2*exp(q**2)/alpha
 regupp = 2.*regu**3*exp(2.*q**2)/alpha**2+regup
