@@ -75,7 +75,6 @@ def findMinU(V,Vp):
 		Vpinterp=interp1d(rho,Vp)
 		return rho0,Vinterp(rho0),Vpinterp(rho0)
 	else:
-		print "V=",V
 		return 0,V[0],Vp[0]
 	if max(abs(V.imag))>10**(-12.):
 		print "ERROR: V is not real: Vmaxi=",max(abs(V.imag))
