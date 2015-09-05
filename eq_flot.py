@@ -39,7 +39,9 @@ def eqV(Vpk,f,s1R,s2,hLo,hTo):
   VdynTemp=4.*qdim*num/den
   VdynNew= dot(dot(VdynTemp,wQ),wOmeg)*1./(2.*pi)
   
-  return VdynNew
+  if abs(VdynNew.imag)>10**(-12.):
+  	print "Vdyn is not REAL!!!!! LOL"
+  return VdynNew.real
 
 def eq0XZ(V,Vp,etaZ):
 	rho0,Vrho0,Vprho0 = findMinU(V,Vp)
