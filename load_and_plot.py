@@ -25,15 +25,15 @@ drho = Lrho/Nrho        # pas de potentiel
 rho = linspace(0,Lrho,Nrho)
 
 
-Ndicho=1
-beta=0.001
-vmid=-0.15	
+Ndicho=30
+beta=.05
+kappa=4.5	
 
 #currentPath=os.path.dirname(os.path.realpath(__file__))
 
 folderPath='results/N1d3alpha2NT40000Nrho30NQ50/'
 
-fileName=folderPath+'Veta-'+str(Ndicho)+'-'+str(Nomeg)+'-'+str(Lomeg)+'-'+str(beta)+'-'+str(vmid)
+fileName=folderPath+'Veta-'+str(Ndicho)+'-'+str(Nomeg)+'-'+str(Lomeg)+'-'+str(beta)+'-'+str(kappa)
 
 data=load(fileName+'.npz')
 matrixZ=data['etaZResults']
@@ -52,7 +52,6 @@ for i in range(Ndicho):
   ti=linspace(0,100*dt*NTi,NTi)
   if ti[-1]<tmin:
 	tmin=ti[-1]
-  print "ti=",len(ti),"NTi=",NTi
   ax1.plot(ti,matrixZ[i], label="step="+str(i),marker='o')
   ax2.plot(ti,matrixX[i], label="step="+str(i),marker='o')
 
@@ -60,6 +59,7 @@ index=0
 for j in range(len(matrixV[index])):
   if (j%5)==0:
     ax3.plot(rho,matrixV[index][j],label="time="+str(j),marker='o')
+
 
 ax1.set_title('Eta Z')
 ax1.set_ylim([0, 0.1])
@@ -72,4 +72,23 @@ ax2.set_xlim([0,tmin])
 ax1.legend(loc=4)
 ax2.legend(loc=4)
 ax3.legend(loc=4)
+
+f4=plt.figure()
+ax4=f4.add_subplot(111)
+
+indexVj=0
+for istep in range(Ndicho):
+	Vj=[]
+  	NTi=len(matrixZ[istep])  
+  	ti=linspace(0,100*dt*NTi,NTi)
+	for k in range(len(matrixV[istep])):
+		Vj.append(matrixV[istep][k][indexVj].real)
+	dlndVj=gradient(log(abs(gradient(Vj)/(100.*dt)+10**(-30))))/(100.*dt)
+	
+	ax4.plot(ti,-1./dlndVj,marker='o')
+
+ax4.set_title('Nu')
+ax4.set_ylim([0,1])
+ax4.set_xlim([0,tmin])
+
 plt.show()
