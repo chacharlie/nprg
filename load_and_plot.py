@@ -26,14 +26,14 @@ rho = linspace(0,Lrho,Nrho)
 
 
 Ndicho=30
-beta=.05
+beta=.1
 kappa=4.5	
 
 #currentPath=os.path.dirname(os.path.realpath(__file__))
 
 folderPath='results/N1d3alpha2NT40000Nrho30NQ50/'
 
-fileName=folderPath+'Veta-'+str(Ndicho)+'-'+str(Nomeg)+'-'+str(Lomeg)+'-'+str(beta)+'-'+str(kappa)
+fileName=folderPath+'Veta-'+str(Ndicho)+'-'+str(Nomeg)+'-'+str(Lomeg)+'-'+str(beta)+'-'+str(kappa)+'-testmoinsomega'
 
 data=load(fileName+'.npz')
 matrixZ=data['etaZResults']
