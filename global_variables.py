@@ -53,7 +53,7 @@ regupp = 2.*regu**3*exp(2.*q**2)/alpha**2+regup
 # DANS R1, on change R1(omeg) en R1(-omeg) pour etre en accord avec les conventions (contradictoires) entre la def de R1 de facon causale, et les conventions "arbitraires" de la definition de R1(omeg)  
 R1 = 1j/(1j-beta*omeg)*regu
 dqR1 = 1j/(1j-beta*omeg)*regup
-domegR1 = +1j*beta/(1j+beta*omeg)**2*regu
+domegR1 = +1j*beta/(1j-beta*omeg)**2*regu
 
 R2 = beta/(1+beta**2*omeg**2)*regu
 dqR2 = beta/(1+beta**2*omeg**2)*regup
