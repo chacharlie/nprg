@@ -6,14 +6,14 @@ from time import time
 from global_variables import *
 from step_dicho import *
 
-Ndicho=30
+Ndicho=1
 
-kmin=3.
-kmax=6.
+kmin=4.5
+kmax=4.5
 kappa=(kmin+kmax)/2.
 
 folderPath='results/N'+str(int(NN))+'d'+str(int(dim))+'alpha'+str(int(alpha))+'NT'+str(NT)+'Nrho'+str(Nrho)+'NQ'+str(NQ)+'/'
-fileName=folderPath+'Veta-'+str(Ndicho)+'-'+str(Nomeg)+'-'+str(Lomeg)+'-'+str(beta)+'-'+str(kappa)+'-moinsomega'
+fileName=folderPath+'Veta-'+str(Ndicho)+'-'+str(Nomeg)+'-'+str(Lomeg)+'-'+str(beta)+'-'+str(kappa)+'-moinsomega-flotXZ'
 etaZResults=[]
 etaXResults=[]
 Vresults=[]
@@ -24,7 +24,7 @@ for i in range(Ndicho):
   print "i=",i, " time =",(time()-tsimu),"for simu ",fileName
   kappa=(kmin+kmax)/2.
   print "kappa=",kappa
-  Vinit=0.1*(rho-kappa)#linspace(-0.3,0.7,Nrho)+vmid
+  Vinit=0.1*(rho-kappa)
   
   phase,etaZPlot,etaXPlot,Vplot=step_dicho(Vinit) #phase=0 : low temp, =1, high temp
   

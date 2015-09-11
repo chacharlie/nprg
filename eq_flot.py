@@ -10,9 +10,9 @@ def eqFlot(V,etaZ,etaX):
 	Vpp=d2_rho(V)
   
 	s1 = -(etaZ*qR1+qdqR1+(2.-etaZ+etaX)*qdomegR1)
-	s12 = -(etaZ*qR1[::-1,:]+qdqR1[::-1,:]+(2.-etaZ+etaX)*qdomegR12)
+	s12 = s1[::-1,:] #-(etaZ*qR1[::-1,:]+qdqR1[::-1,:]+(2.-etaZ+etaX)*qdomegR12)
 	s1R = (-1.+R2)*s1
-	s12R = (-1.+R2)*s12
+	s12R = s1R[::-1,:] #(-1.+R2[::-1,:])*s12
 	s2 = -(etaX*R2+qdqR2+(2-etaZ+etaX)*omegdomegR2)
 	
 	for k in range(Nrho):
@@ -48,14 +48,15 @@ def eqV(Vpk,f,s1R,s12R,s2,hLo,hTo):
 def eq0XZ(V,Vp,etaZ,s1,s12,s2):
 	rho0,Vrho0,Vprho0 = findMinU(V,Vp)
 	
-	hL= qq*(R1+1.)+Vk+2.*rhok*Vpk
-	hT= qq*(R1+1.)+Vk 
+	hL= qq*(R1+1.)+Vrho0+2.*rho0*Vprho0
+	hT= qq*(R1+1.)+Vrho0 
 
 	
 	Z0dyn = eq0Z(Vprho0,rho0,hL,hT,s1,s12,s2)
 	X0dyn = eq0X(Vprho0,rho0,hL,hT,s1,s12,s2)
 
-	return Z0dyn,
+	return Z0dyn,X0dyn
+
 def eq0Z(Vp0,rho0,hL0,hT0,s1,s12,s2):
 	temp=(4*rho0*(((-((hL0[::-1,:] - 1j*omeg)*(hT0[::-1,:] - 1j*omeg)*(hL0 + 1j*omeg)*((-1j)*hT0 + omeg)*(dim*dqR2*(hL0 + 1j*omeg)*((-1j)*hT0 + omeg)*(1j*hL0[::-1,:]*(hT0 + 1j*omeg) + (hT0 - hT0[::-1,:] + 2*1j*omeg)*omeg + hL0*(1j*hT0[::-1,:] + omeg)) - 2*qq*(-(dqqR2*(hL0 + 1j*omeg)*((-1j)*hT0 + omeg)*(1j*hL0[::-1,:]*(hT0 + 1j*omeg) + (hT0 - hT0[::-1,:] + 2*1j*omeg)*omeg + hL0*(1j*hT0[::-1,:] + omeg))) + dqqh*(hL0**2*(hT0 + hT0[::-1,:]) + hL0[::-1,:]*(hT0 + 1j*omeg)**2 - (hT0 + hT0[::-1,:])*omeg**2 + hL0*(hT0**2 + 4*1j*hT0*omeg + (2*1j*hT0[::-1,:] - omeg)*omeg))*(-1 + R2)))) + dqh*(hL0[::-1,:] - 1j*omeg)*(hT0[::-1,:] - 1j*omeg)*(hL0 + 1j*omeg)*((-1j)*hT0 + omeg)*(hL0**2*(hT0 + hT0[::-1,:]) + hL0[::-1,:]*(hT0 + 1j*omeg)**2 - (hT0 + hT0[::-1,:])*omeg**2 + hL0*(hT0**2 + 4*1j*hT0*omeg + (2*1j*hT0[::-1,:] - omeg)*omeg))*(4*dqR2*qq + dim*(-1 + R2)) + 4*dqh**2*(hL0[::-1,:]**2*(hT0 + 1j*omeg)**3*(1j*hT0[::-1,:] + omeg) + hL0**3*(1j*hL0[::-1,:] + omeg)*(hT0**2 + hT0[::-1,:]**2 + hT0*(hT0[::-1,:] + 1j*omeg) - 1j*hT0[::-1,:]*omeg - omeg**2) + hL0[::-1,:]*omeg*(hT0**3*(hT0[::-1,:] - 1j*omeg) - 2*hT0*(hT0[::-1,:] - 2*1j*omeg)*omeg**2 + hT0**2*omeg*(3*1j*hT0[::-1,:] + 4*omeg) + omeg**2*(hT0[::-1,:]**2 - 2*1j*hT0[::-1,:]*omeg - 2*omeg**2)) + omeg**2*(hT0**3*((-1j)*hT0[::-1,:] - omeg) + hT0**2*(3*hT0[::-1,:] - 4*1j*omeg)*omeg + 2*hT0*omeg**2*(1j*hT0[::-1,:] + 2*omeg) + 1j*omeg**2*(-hT0[::-1,:]**2 + 2*1j*hT0[::-1,:]*omeg + 2*omeg**2)) + hL0**2*(-3*hT0**2*(hL0[::-1,:] + hT0[::-1,:] - 2*1j*omeg)*omeg + hT0**3*(1j*hT0[::-1,:] + omeg) - 3*hT0*omeg*(hL0[::-1,:]*hT0[::-1,:] + 1j*hL0[::-1,:]*omeg + 2*omeg**2) + omeg*(-3*hL0[::-1,:]*hT0[::-1,:]**2 + 3*1j*hL0[::-1,:]*hT0[::-1,:]*omeg + 3*1j*hT0[::-1,:]**2*omeg + 3*hL0[::-1,:]*omeg**2 + 4*hT0[::-1,:]*omeg**2 - 4*1j*omeg**3)) + 1j*hL0*(omeg*(-3*hT0**2*(hT0[::-1,:] - 2*1j*omeg)*omeg - 6*hT0*omeg**3 + hT0**3*(1j*hT0[::-1,:] + omeg) + omeg**2*(3*1j*hT0[::-1,:]**2 + 4*hT0[::-1,:]*omeg - 4*1j*omeg**2)) + hL0[::-1,:]*(hT0**3*(hT0[::-1,:] - 1j*omeg) + 3*1j*hT0**2*hT0[::-1,:]*omeg - 6*hT0*hT0[::-1,:]*omeg**2 + omeg**2*(-3*hT0[::-1,:]**2 + 2*1j*hT0[::-1,:]*omeg + 2*omeg**2))))*qq*(-1 + R2))*s12)/(hL0 + 1j*omeg)**3 + ((1j*hL0[::-1,:] + omeg)*(1j*hT0[::-1,:] + omeg)*(-(dim*dqh*(hL0 + 1j*omeg)*(1j*hL0[::-1,:] + omeg)**2*((-1j)*hT0 + omeg)**2) + 4*dqh**2*(1j*hL0[::-1,:] + omeg)**2*((-1j)*hT0 + omeg)**2*qq - 1j*((-1j)*hL0 + omeg)*(dim*dqh*((-1j)*hL0 + omeg)*((-1j)*hT0 + omeg)*(1j*hT0[::-1,:] + omeg)**2 + 4*dqh**2*(hL0 + 1j*omeg)*(1j*hT0[::-1,:] + omeg)**2*qq + 2*((-1j)*hT0 + omeg)*(dqqh*(1j*hL0[::-1,:] + omeg)**2*((-1j)*hT0 + omeg) + dqqh*((-1j)*hL0 + omeg)*(1j*hT0[::-1,:] + omeg)**2)*qq))*(-1 + R2)*s12)/((-1j)*hL0 + omeg)**3 + ((1j*hL0[::-1,:] + omeg)**2*(1j*hT0[::-1,:] + omeg)**2*((dim*dqh*(hT0 + 1j*omeg)*((-1j)*hL0 + omeg)*(1j*hL0[::-1,:] + omeg) - 4*dqh**2*(1j*hL0[::-1,:] + omeg)*((-1j)*hT0 + omeg)*qq + (hL0 + 1j*omeg)*(dim*dqh*((-1j)*hT0 + omeg)*(1j*hT0[::-1,:] + omeg) - 4*dqh**2*(hT0[::-1,:] - 1j*omeg)*qq + 2*dqqh*(hT0 + 1j*omeg)*(hL0[::-1,:] + hT0[::-1,:] - 2*1j*omeg)*qq))*(-1 + R2)*s1 + (dim*dqh*(hL0[::-1,:] - 1j*omeg)*(hL0 + 1j*omeg)*((-1j)*hT0 + omeg)**2 - 4*dqh**2*(hL0[::-1,:] - 1j*omeg)*((-1j)*hT0 + omeg)**2*qq + ((-1j)*hL0 + omeg)*(dim*dqh*((-1j)*hL0 + omeg)*((-1j)*hT0 + omeg)*(1j*hT0[::-1,:] + omeg) + 4*dqh**2*(hL0 + 1j*omeg)*(1j*hT0[::-1,:] + omeg)*qq + 2*((-1j)*hT0 + omeg)*(dqqh*(1j*hL0[::-1,:] + omeg)*((-1j)*hT0 + omeg) + dqqh*((-1j)*hL0 + omeg)*(1j*hT0[::-1,:] + omeg))*qq))*s2))/((-1j)*hL0 + omeg)**3)*Vp0**2)/(dim*(hL0[::-1,:] - 1j*omeg)**3*(hT0 + 1j*omeg)**3*(1j*hT0[::-1,:] + omeg)**3)
 	
@@ -68,7 +69,7 @@ def eq0Z(Vp0,rho0,hL0,hT0,s1,s12,s2):
 	
 	
 	
-def eq0X(Vp0,rho0,hL0,hT0,rho0,s1,s12,s2):
+def eq0X(Vp0,rho0,hL0,hT0,s1,s12,s2):
 	
 	temp=(4.*rho0*((1 - 1j*hR1)*(hL0*(hT0[::-1,:] - 1j*omeg)**2 + hL0[::-1,:]**2*(hT0 + 1j*omeg) + 2*hL0[::-1,:]*omeg*(-1j*hT0 + omeg) + omeg*(1j*hT0[::-1,:]**2 + 2*hT0[::-1,:]*omeg - (hT0 + 2*1j*omeg)*omeg))*(-1 + R2)*s12 + (hL0[::-1,:]*(-1j*hT0 + omeg)**2*(domegR2*(-1j*hL0 + omeg) + 1j*(1j + hR1)*(-1 + R2)) + hL0*(2*hT0[::-1,:]*omeg*(-(domegR2*(hT0 + 1j*omeg)) + 1j*(-1 + R2) + hR1*(-1 + R2)) - omeg**2*(5 + 3*domegR2*omeg + 2*1j*hR1*(-1 + R2) + 3*1j*hR1[::-1,:]*(-1 + R2) - 5*R2) + hT0**2*(1 + domegR2*omeg + 1j*hR1[::-1,:]*(-1 + R2) - R2) + 4*hT0*omeg*(hR1[::-1,:] + 1j*(1 + domegR2*omeg - R2) - hR1[::-1,:]*R2)) + omeg*(2*omeg**2*(-1j*(2 + domegR2*omeg - 2*R2) + hR1*(-1 + R2) + hR1[::-1,:]*(-1 + R2)) - hT0*omeg*(5 + 3*domegR2*omeg + 2*1j*hR1*(-1 + R2) + 3*1j*hR1[::-1,:]*(-1 + R2) - 5*R2) + hT0[::-1,:]*omeg*(1 + domegR2*(-1j*hT0 + omeg) + 1j*hR1*(-1 + R2) - R2) + hT0**2*(2*1j + hR1 + hR1[::-1,:] + 1j*domegR2*omeg - (2*1j + hR1 + hR1[::-1,:])*R2)) + hL0**2*(hT0*(1 + domegR2*omeg + 1j*hR1[::-1,:]*(-1 + R2) - R2) + hT0[::-1,:]*(-1 + 1j*domegR2*hT0 - domegR2*omeg - 1j*hR1*(-1 + R2) + R2) + omeg*(2*1j + hR1 + hR1[::-1,:] + 1j*domegR2*omeg - (2*1j + hR1 + hR1[::-1,:])*R2)))*s12 - 1j*(1j + hR1)*(1j*hL0[::-1,:] + omeg)*(1j*hT0[::-1,:]+ omeg)*(hT0[::-1,:]*(s1 - R2*s1 + (hL0 + 1j*omeg)*s2) + hL0[::-1,:]*(s1 - R2*s1 + (hT0 + 1j*omeg)*s2) - 1j*omeg*(-2*(-1. + R2)*s1 + (hL0 + hT0 + 2*1j*omeg)*s2)))*Vp0**2)/((-1j*hL0 + omeg)**2*(1j*hL0[::-1,:] + omeg)**2*(-1j*hT0 + omeg)**2*(1j*hT0[::-1,:] + omeg)**2)
 

@@ -25,15 +25,15 @@ drho = Lrho/Nrho        # pas de potentiel
 rho = linspace(0,Lrho,Nrho)
 
 
-Ndicho=30
-beta=.1
-kappa=4.5	
+Ndicho=1
+beta=0.1
+kappa=1.	
 
 #currentPath=os.path.dirname(os.path.realpath(__file__))
 
 folderPath='results/N1d3alpha2NT40000Nrho30NQ50/'
 
-fileName=folderPath+'Veta-'+str(Ndicho)+'-'+str(Nomeg)+'-'+str(Lomeg)+'-'+str(beta)+'-'+str(kappa)+'-testmoinsomega'
+fileName=folderPath+'Veta-'+str(Ndicho)+'-'+str(Nomeg)+'-'+str(Lomeg)+'-'+str(beta)+'-'+str(kappa)+'-moinsomega-flotXZ'
 
 data=load(fileName+'.npz')
 matrixZ=data['etaZResults']
