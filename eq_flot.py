@@ -12,6 +12,7 @@ def eqFlot(V,etaZ,etaX):
 	s1 = -(etaZ*qR1+qdqR1+(2.-etaZ+etaX)*qdomegR1)
 	s12 = -(etaZ*qR1[::-1,:]+qdqR1[::-1,:]+(2.-etaZ+etaX)*qdomegR12)
 	s1R = (-1.+R2)*s1
+	s12R = (-1.+R2)*s12
 	s2 = -(etaX*R2+qdqR2+(2-etaZ+etaX)*omegdomegR2)
 	
 	for k in range(Nrho):
@@ -19,7 +20,7 @@ def eqFlot(V,etaZ,etaX):
 		hTo= homeg+V[k]
 		f= 3.*Vp[k]+2.*rho[k]*Vpp[k]
 		
-		Vdyn[k]=eqV(Vp[k],f,s1R,s2,hLo,hTo)
+		Vdyn[k]=eqV(Vp[k],f,s1R,s12R,s2,hLo,hTo)
 
 	Z0dyn,X0dyn = eq0XZ(V,Vp,etaZ,s1,s12,s2)
 		
@@ -30,10 +31,10 @@ def eqFlot(V,etaZ,etaX):
 	return Vdim+Vdyn,etaZ-(Z0dim+Z0dyn),etaX-(X0dim+X0dyn)
 
 
-def eqV(Vpk,f,s1R,s2,hLo,hTo):
+def eqV(Vpk,f,s1R,s12R,s2,hLo,hTo):
   num=(1.-NN)*hLo[::-1,:]**2.*hLo**2*(hTo*\
-    s1R[::-1,:]+hTo[::-1,:]*(s1R-hTo*s2))*Vpk+\
-    hLo*hTo[::-1,:]**2*hTo**2*s1R[::-1,:]*f+\
+    s12R+hTo[::-1,:]*(s1R-hTo*s2))*Vpk+\
+    hLo*hTo[::-1,:]**2*hTo**2*s12R*f+\
     hLo[::-1,:]*hTo[::-1,:]**2*hTo**2*(s1R-hLo*s2)*f
   den=hLo[::-1,:]**2*hLo**2*hTo[::-1,:]**2*hTo**2
   
