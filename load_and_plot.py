@@ -25,9 +25,9 @@ drho = Lrho/Nrho        # pas de potentiel
 rho = linspace(0,Lrho,Nrho)
 
 
-Ndicho=1
-beta=0.1
-kappa=1.	
+Ndicho=30
+beta=0.05
+kappa=4.5	
 
 #currentPath=os.path.dirname(os.path.realpath(__file__))
 

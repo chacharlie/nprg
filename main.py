@@ -8,12 +8,12 @@ from step_dicho import *
 
 Ndicho=1
 
-kmin=4.5
-kmax=4.5
+kmin=3.
+kmax=3.
 kappa=(kmin+kmax)/2.
 
 folderPath='results/N'+str(int(NN))+'d'+str(int(dim))+'alpha'+str(int(alpha))+'NT'+str(NT)+'Nrho'+str(Nrho)+'NQ'+str(NQ)+'/'
-fileName=folderPath+'Veta-'+str(Ndicho)+'-'+str(Nomeg)+'-'+str(Lomeg)+'-'+str(beta)+'-'+str(kappa)+'-moinsomega-flotXZ'
+fileName=folderPath+'Veta-'+str(Ndicho)+'-'+str(Nomeg)+'-'+str(Lomeg)+'-'+str(beta)+'-'+str(kappa)+'-moinsomega-flotXZtest2'
 etaZResults=[]
 etaXResults=[]
 Vresults=[]
