@@ -60,11 +60,11 @@ domegR1 = +1j*beta/(1j-beta*omeg)**2*regu
 #dqqR1 = 1j/(1j+beta*omeg)*regupp
 #domegR1 = -1j*beta/(1j+beta*omeg)**2*regu
 
-R2 = beta/(1+beta**2*omeg**2)*regu
+R2 = qq*beta/(1+beta**2*omeg**2)*regu
 R21= -1.+R2
-dqR2 = beta/(1+beta**2*omeg**2)*regup
-dqqR2 = beta/(1+beta**2*omeg**2)*regupp
-domegR2 = -2*beta**3*omeg/(1+beta**2*omeg**2)**2*regu
+dqR2 = beta/(1+beta**2*omeg**2)*(regup*qq+regu)
+dqqR2 = beta/(1+beta**2*omeg**2)*(regupp*qq+2.*regup)
+domegR2 = -2*beta**3*omeg/(1+beta**2*omeg**2)**2*regu*qq
 
 # pour optimiser les calculs
 dqh = 1.+R1+qq*dqR1 #1.+regu[0,:]+qq[0,:]*regup[0,:]
