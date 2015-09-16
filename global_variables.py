@@ -45,7 +45,7 @@ wOmeg=Lomeg*wOmegtemp
 
 # regulateurs
 alpha = 2.		# parametre du regulateur en impulsions
-beta = 0.1		# parametre du regulateur en frequences
+beta = 0.4		# parametre du regulateur en frequences
 regu = alpha/(exp(q**2)-1.)
 regup = -regu**2*exp(q**2)/alpha
 regupp = 2.*regu**3*exp(2.*q**2)/alpha**2+regup

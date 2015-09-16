@@ -6,14 +6,14 @@ from time import time
 from global_variables import *
 from step_dicho import *
 
-Ndicho=1
+Ndicho=30
 
 kmin=3.
-kmax=3.
+kmax=6.
 kappa=(kmin+kmax)/2.
 
 folderPath='results/N'+str(int(NN))+'d'+str(int(dim))+'alpha'+str(int(alpha))+'NT'+str(NT)+'Nrho'+str(Nrho)+'NQ'+str(NQ)+'/'
-fileName=folderPath+'Veta-'+str(Ndicho)+'-'+str(Nomeg)+'-'+str(Lomeg)+'-'+str(beta)+'-'+str(kappa)+'-moinsomega-flotXZtest2'
+fileName=folderPath+'Veta-'+str(Ndicho)+'-'+str(Nomeg)+'-'+str(Lomeg)+'-'+str(beta)+'-'+str(kappa)+'-moinsomega-flotXZcomplets'
 etaZResults=[]
 etaXResults=[]
 Vresults=[]
