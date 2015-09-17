@@ -9,13 +9,12 @@ def step_dicho(Vinit):
   V=Vinit
   etaZ=0.01
   etaX=0.01
-  #phase= NaN
   etaZPlot=[]
   etaXPlot=[]
   Vplot=[]
 
   for n in range(NT):
-	  V,etaZ,etaX=time_step(V,etaZ,etaX)
+	  V,etaZ,etaX,VZXerror=time_step(V,etaZ,etaX)
 	  Vp=d_rho(V)
 	  if min(Vp)>0:
 	    Vpre=V
@@ -36,12 +35,8 @@ def step_dicho(Vinit):
 		  etaZPlot.append(etaZ)
 		  etaXPlot.append(etaX)
 		  Vplot.append(V)
+		if max(abs(VZXerror))>0.:
+			print "V,Z or X is not real.... MAIS LOL QUOI !! VZXerror=",VZXerror
 		  
-  #else:
-    #temp= np.sign(np.gradient(etaZPlot))
-    #temp2=temp[1:]-temp[:-1]
-    #temp3=np.where(temp2==0)
-    #if len(temp3[0])>1:
-      #phase=1
 	
   return phase,etaZPlot,etaXPlot,Vplot

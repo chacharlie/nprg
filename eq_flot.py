@@ -3,9 +3,11 @@ from scipy.interpolate import interp1d
 
 from global_variables import *
 from diff_op import *
+from regu import *
 
 def eqFlot(V,etaZ,etaX):
 	Vdyn = zeros((V.size))
+	Verror= zeros((V.size))
 	Vp=d_rho(V)
 	Vpp=d2_rho(V)
   
@@ -20,15 +22,17 @@ def eqFlot(V,etaZ,etaX):
 		hTo= homeg+V[k]
 		f= 3.*Vp[k]+2.*rho[k]*Vpp[k]
 		
-		Vdyn[k]=eqV(Vp[k],f,s1R,s12R,s2,hLo,hTo)
+		Vdyn[k],Verror[k]=eqV(Vp[k],f,s1R,s12R,s2,hLo,hTo)
 
-	Z0dyn,X0dyn = eq0XZ(V,Vp,etaZ,s1,s12,s2)
+	Z0dyn,X0dyn,ZXerror = eq0XZ(V,Vp,etaZ,s1,s12,s2)
 		
  	Vdim=(-2.+etaZ)*V+(-2.+dim+etaZ)*rho*Vp 
 	Z0dim= etaZ
 	X0dim= etaX
+	
+	VZXerror = max(abs(Verror))+ZXerror
 
-	return Vdim+Vdyn,etaZ-(Z0dim+Z0dyn),etaX-(X0dim+X0dyn)
+	return Vdim+Vdyn,etaZ-(Z0dim+Z0dyn),etaX-(X0dim+X0dyn),ZXerror
 
 
 def eqV(Vpk,f,s1R,s12R,s2,hLo,hTo):
@@ -41,9 +45,10 @@ def eqV(Vpk,f,s1R,s12R,s2,hLo,hTo):
   VdynTemp=4.*qdim*num/den
   VdynNew= dot(dot(VdynTemp,wQ),wOmeg)*1./(2.*pi)
   
-  if abs(VdynNew.imag)>10**(-12.):
-  	print "Vdyn is not REAL!!!!! LOL"
-  return VdynNew.real
+  Verror=0.
+  if abs(VdynNew.imag)>10**(-10.):
+  	Verror=VdynNew.imag
+  return VdynNew.real,Verror
 
 def eq0XZ(V,Vp,etaZ,s1,s12,s2):
 	rho0,Vrho0,Vprho0 = findMinU(V,Vp)
@@ -51,9 +56,10 @@ def eq0XZ(V,Vp,etaZ,s1,s12,s2):
 	hL= qq*(R1+1.)+Vrho0+2.*rho0*Vprho0
 	hT= qq*(R1+1.)+Vrho0 
 
-	Z0dyn = eq0Z(Vprho0,rho0,hL,hT,s1,s12,s2)
-	X0dyn = eq0X(Vprho0,rho0,hL,hT,s1,s12,s2)
+	Z0dyn,Zerror = eq0Z(Vprho0,rho0,hL,hT,s1,s12,s2)
+	X0dyn,Xerror = eq0X(Vprho0,rho0,hL,hT,s1,s12,s2)
 	
+	ZXerror=[Zerror,Xerror]
 #	# si on veut le flot de etaZ avec beta=0
 #	hLbeta0= qq[0,:]*(regu[0,:]+1.)+Vrho0+2.*rho0*Vprho0
 #	hTbeta0= qq[0,:]*(regu[0,:]+1.)+Vrho0
@@ -62,7 +68,7 @@ def eq0XZ(V,Vp,etaZ,s1,s12,s2):
 #	hpp = 2.*regup[0,:]+qq[0,:]*regupp[0,:]
 #	Z0dyn = eq0Zbeta0(Vprho0,dtR,hLbeta0,hTbeta0,rho0,hp,hpp)
 
-	return Z0dyn,X0dyn
+	return Z0dyn,X0dyn,ZXerror
 
 def eq0Z(Vp0,rho0,hL0,hT0,s1,s12,s2):
 #	temp=(4*rho0*(((-((hL0[::-1,:] - 1j*omeg)*(hT0[::-1,:] - 1j*omeg)*(hL0 + 1j*omeg)*((-1j)*hT0 + omeg)*(dim*dqR2*(hL0 + 1j*omeg)*((-1j)*hT0 + omeg)*(1j*hL0[::-1,:]*(hT0 + 1j*omeg) + (hT0 - hT0[::-1,:] + 2*1j*omeg)*omeg + hL0*(1j*hT0[::-1,:] + omeg)) - 2*qq*(-(dqqR2*(hL0 + 1j*omeg)*((-1j)*hT0 + omeg)*(1j*hL0[::-1,:]*(hT0 + 1j*omeg) + (hT0 - hT0[::-1,:] + 2*1j*omeg)*omeg + hL0*(1j*hT0[::-1,:] + omeg))) + dqqh*(hL0**2*(hT0 + hT0[::-1,:]) + hL0[::-1,:]*(hT0 + 1j*omeg)**2 - (hT0 + hT0[::-1,:])*omeg**2 + hL0*(hT0**2 + 4*1j*hT0*omeg + (2*1j*hT0[::-1,:] - omeg)*omeg))*(-1 + R2)))) + dqh*(hL0[::-1,:] - 1j*omeg)*(hT0[::-1,:] - 1j*omeg)*(hL0 + 1j*omeg)*((-1j)*hT0 + omeg)*(hL0**2*(hT0 + hT0[::-1,:]) + hL0[::-1,:]*(hT0 + 1j*omeg)**2 - (hT0 + hT0[::-1,:])*omeg**2 + hL0*(hT0**2 + 4*1j*hT0*omeg + (2*1j*hT0[::-1,:] - omeg)*omeg))*(4*dqR2*qq + dim*(-1 + R2)) + 4*dqh**2*(hL0[::-1,:]**2*(hT0 + 1j*omeg)**3*(1j*hT0[::-1,:] + omeg) + hL0**3*(1j*hL0[::-1,:] + omeg)*(hT0**2 + hT0[::-1,:]**2 + hT0*(hT0[::-1,:] + 1j*omeg) - 1j*hT0[::-1,:]*omeg - omeg**2) + hL0[::-1,:]*omeg*(hT0**3*(hT0[::-1,:] - 1j*omeg) - 2*hT0*(hT0[::-1,:] - 2*1j*omeg)*omeg**2 + hT0**2*omeg*(3*1j*hT0[::-1,:] + 4*omeg) + omeg**2*(hT0[::-1,:]**2 - 2*1j*hT0[::-1,:]*omeg - 2*omeg**2)) + omeg**2*(hT0**3*((-1j)*hT0[::-1,:] - omeg) + hT0**2*(3*hT0[::-1,:] - 4*1j*omeg)*omeg + 2*hT0*omeg**2*(1j*hT0[::-1,:] + 2*omeg) + 1j*omeg**2*(-hT0[::-1,:]**2 + 2*1j*hT0[::-1,:]*omeg + 2*omeg**2)) + hL0**2*(-3*hT0**2*(hL0[::-1,:] + hT0[::-1,:] - 2*1j*omeg)*omeg + hT0**3*(1j*hT0[::-1,:] + omeg) - 3*hT0*omeg*(hL0[::-1,:]*hT0[::-1,:] + 1j*hL0[::-1,:]*omeg + 2*omeg**2) + omeg*(-3*hL0[::-1,:]*hT0[::-1,:]**2 + 3*1j*hL0[::-1,:]*hT0[::-1,:]*omeg + 3*1j*hT0[::-1,:]**2*omeg + 3*hL0[::-1,:]*omeg**2 + 4*hT0[::-1,:]*omeg**2 - 4*1j*omeg**3)) + 1j*hL0*(omeg*(-3*hT0**2*(hT0[::-1,:] - 2*1j*omeg)*omeg - 6*hT0*omeg**3 + hT0**3*(1j*hT0[::-1,:] + omeg) + omeg**2*(3*1j*hT0[::-1,:]**2 + 4*hT0[::-1,:]*omeg - 4*1j*omeg**2)) + hL0[::-1,:]*(hT0**3*(hT0[::-1,:] - 1j*omeg) + 3*1j*hT0**2*hT0[::-1,:]*omeg - 6*hT0*hT0[::-1,:]*omeg**2 + omeg**2*(-3*hT0[::-1,:]**2 + 2*1j*hT0[::-1,:]*omeg + 2*omeg**2))))*qq*(-1 + R2))*s12)/(hL0 + 1j*omeg)**3 + ((1j*hL0[::-1,:] + omeg)*(1j*hT0[::-1,:] + omeg)*(-(dim*dqh*(hL0 + 1j*omeg)*(1j*hL0[::-1,:] + omeg)**2*((-1j)*hT0 + omeg)**2) + 4*dqh**2*(1j*hL0[::-1,:] + omeg)**2*((-1j)*hT0 + omeg)**2*qq - 1j*((-1j)*hL0 + omeg)*(dim*dqh*((-1j)*hL0 + omeg)*((-1j)*hT0 + omeg)*(1j*hT0[::-1,:] + omeg)**2 + 4*dqh**2*(hL0 + 1j*omeg)*(1j*hT0[::-1,:] + omeg)**2*qq + 2*((-1j)*hT0 + omeg)*(dqqh*(1j*hL0[::-1,:] + omeg)**2*((-1j)*hT0 + omeg) + dqqh*((-1j)*hL0 + omeg)*(1j*hT0[::-1,:] + omeg)**2)*qq))*(-1 + R2)*s12)/((-1j)*hL0 + omeg)**3 + ((1j*hL0[::-1,:] + omeg)**2*(1j*hT0[::-1,:] + omeg)**2*((dim*dqh*(hT0 + 1j*omeg)*((-1j)*hL0 + omeg)*(1j*hL0[::-1,:] + omeg) - 4*dqh**2*(1j*hL0[::-1,:] + omeg)*((-1j)*hT0 + omeg)*qq + (hL0 + 1j*omeg)*(dim*dqh*((-1j)*hT0 + omeg)*(1j*hT0[::-1,:] + omeg) - 4*dqh**2*(hT0[::-1,:] - 1j*omeg)*qq + 2*dqqh*(hT0 + 1j*omeg)*(hL0[::-1,:] + hT0[::-1,:] - 2*1j*omeg)*qq))*(-1 + R2)*s1 + (dim*dqh*(hL0[::-1,:] - 1j*omeg)*(hL0 + 1j*omeg)*((-1j)*hT0 + omeg)**2 - 4*dqh**2*(hL0[::-1,:] - 1j*omeg)*((-1j)*hT0 + omeg)**2*qq + ((-1j)*hL0 + omeg)*(dim*dqh*((-1j)*hL0 + omeg)*((-1j)*hT0 + omeg)*(1j*hT0[::-1,:] + omeg) + 4*dqh**2*(hL0 + 1j*omeg)*(1j*hT0[::-1,:] + omeg)*qq + 2*((-1j)*hT0 + omeg)*(dqqh*(1j*hL0[::-1,:] + omeg)*((-1j)*hT0 + omeg) + dqqh*((-1j)*hL0 + omeg)*(1j*hT0[::-1,:] + omeg))*qq))*s2))/((-1j)*hL0 + omeg)**3)*Vp0**2)/(dim*(hL0[::-1,:] - 1j*omeg)**3*(hT0 + 1j*omeg)**3*(1j*hT0[::-1,:] + omeg)**3)
@@ -75,9 +81,10 @@ def eq0Z(Vp0,rho0,hL0,hT0,s1,s12,s2):
 	ZdynTemp=4.*qdim*temp2
 	ZdynNew= dot(dot(ZdynTemp,wQ),wOmeg)*1./(2.*pi)
 	
-	if abs(ZdynNew.imag)>10**(-12.):
-  		print "Zdyn is not REAL!!!!! LOL"
-	return ZdynNew.real
+	Zerror=0.
+	if abs(ZdynNew.imag)>10**(-10.):
+		Zerror=ZdynNew.imag
+	return ZdynNew.real,Zerror
 	
 def eq0Zbeta0(Vpk,dtR,hL0,hT0,rho0,hp0,hpp0):
 	ZdynTemp=16.*qdim[0,:]/(dim*hL0**3*hT0**3)*\
@@ -94,9 +101,10 @@ def eq0X(Vp0,rho0,hL0,hT0,s1,s12,s2):
 	XdynTemp=4.*qdim*temp
 	XdynNew= dot(dot(XdynTemp,wQ),wOmeg)*1./(2.*pi)
 	
-	if abs(XdynNew.imag)>10**(-12.):
-  		print "Xdyn is not REAL!!!!! LOL"
-	return XdynNew.real
+	Xerror=0.
+	if abs(XdynNew.imag)>10**(-10.):
+  		Xerror=XdynNew.imag
+	return XdynNew.real,Xerror
 
 def findMinU(V,Vp):
 	if int(abs(sum(sign(V))))!=Nrho:
