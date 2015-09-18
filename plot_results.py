@@ -25,9 +25,9 @@ drho = Lrho/Nrho        # pas de potentiel
 rho = linspace(0,Lrho,Nrho)
 
 
-Ndicho=1
-beta=1.
-kappa=3.	
+Ndicho=30
+beta=0.01
+kappa=4.5	
 
 #currentPath=os.path.dirname(os.path.realpath(__file__))
 
@@ -66,7 +66,7 @@ ax1.set_ylim([0, 0.1])
 ax1.set_xlim([0,tmin])
 
 ax2.set_title('Eta X')
-ax2.set_ylim([0, 0.1])
+ax2.set_ylim([0, 0.2])
 ax2.set_xlim([0,tmin])
 
 ax1.legend(loc=4)

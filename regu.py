@@ -52,16 +52,15 @@ elif choixRegu==2:
 
 
 # pour optimiser les calculs
-dqh = 1.+R1+qq*dqR1 #1.+regu[0,:]+qq[0,:]*regup[0,:]
+dqhnoZ = R1+qq*dqR1 #1.+regu[0,:]+qq[0,:]*regup[0,:]
 dqqh = 2.*dqR1+qq*dqqR1#2.*regup[0,:]+qq[0,:]*regupp[0,:]
+
+qdomegR1=qq*domegR1
 
 qR1=qq*R1
 qdqR1=2.*qq*qq*dqR1
-qdomegR1=qq*omeg*domegR1
+qomegdomegR1=qq*omeg*domegR1
 qdomegR12=qq*omeg*domegR1[::-1,:]
 qdqR2=2.*qq*dqR2
 omegdomegR2=omeg*domegR2
 
-homeg=qq*(R1+1.)+1j*omeg
-hR1= qq*domegR1
-homegp= 1j + qq*domegR1
