@@ -11,7 +11,9 @@ def step_dicho(Vinit,Zinit,Xinit):
 	etaX=0.01
 	etaZPlot=[]
 	etaXPlot=[]
-	VZXplot=[]
+	Vplot=[]
+	Zplot=[]
+	Xplot=[]
 
 	for n in range(NT):
 		VZX,etaZ,etaX,VZXerror=time_step(VZX,etaZ,etaX)
@@ -29,9 +31,11 @@ def step_dicho(Vinit,Zinit,Xinit):
 		if(n%(100)==0):
 			etaZPlot.append(etaZ)
 			etaXPlot.append(etaX)
-			VZXplot.append(VZX)
+			Vplot.append(VZX[0])
+			Zplot.append(VZX[1])
+			Xplot.append(VZX[2])
 		if max(abs(VZXerror))>0.:
 			print "V,Z or X is not real.... MAIS LOL QUOI !! VZXerror=",VZXerror
 		  
 	
-	return phase,etaZPlot,etaXPlot,VZXplot
+	return phase,etaZPlot,etaXPlot,Vplot,Zplot,Xplot

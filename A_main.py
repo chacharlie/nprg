@@ -13,7 +13,7 @@ kmax=3.
 kappa=(kmin+kmax)/2.
 
 folderPath='A_results/N'+str(int(NN))+'d'+str(int(dim))+'alpha'+str(int(alpha))+'NT'+str(NT)+'Nrho'+str(Nrho)+'NQ'+str(NQ)+'/'
-fileName=folderPath+'Veta-'+str(Ndicho)+'-'+str(Nomeg)+'-'+str(Lomeg)+'-'+str(beta)+'-'+str(kappa)+'-'+str(choixRegu)+'-plusomega'
+fileName=folderPath+'Veta-'+str(Ndicho)+'-'+str(Nomeg)+'-'+str(Lomeg)+'-'+str(beta)+'-'+str(kappa)+'-'+str(choixRegu)+'-moinsomega'
 etaZResults=[]
 etaXResults=[]
 Vresults=[]
@@ -27,10 +27,10 @@ for i in range(Ndicho):
   kappa=(kmin+kmax)/2.
   print "kappa=",kappa
   Vinit= 0.1*(rho-kappa)
-  Zinit= 0.*ones((rho.size))
+  Zinit= ones((rho.size))
   Xinit=0.1*Zinit
   
-  phase,etaZPlot,etaXPlot,VZXplot=step_dicho(Vinit,Zinit,Xinit) #phase=0 : low temp, =1, high temp
+  phase,etaZPlot,etaXPlot,Vplot,Zplot,Xplot=step_dicho(Vinit,Zinit,Xinit) #phase=0 : low temp, =1, high temp
   
   if phase==0:
     kmax = kappa
@@ -39,9 +39,9 @@ for i in range(Ndicho):
   
   etaZResults.append(np.array(etaZPlot))
   etaXResults.append(np.array(etaXPlot))
-  Vresults.append(np.array(VZXplot[0]))
-  Zresults.append(np.array(VZXplot[1]))
-  Xresults.append(np.array(VZXplot[2]))
+  Vresults.append(np.array(Vplot))
+  Zresults.append(np.array(Zplot))
+  Xresults.append(np.array(Xplot))
   kappaResults.append(kappa)
 
 

@@ -8,8 +8,8 @@ from regu import *
 
 def eqFlot(VZX,etaZ,etaX):
 	V=VZX[0]
-	Z=VZX[1]
-	X=VZX[2]	
+	Z=ones((rho.size))#VZX[1]
+	X=ones((rho.size))#VZX[2]	
 
 	Vdyn = zeros((rho.size))
 	Verror= zeros((rho.size))
@@ -94,7 +94,7 @@ def eqZ(rhok,Xk,Xpk,Zk,Zpk,Zppk,R2X,s1,s12,s2,f,homeg):
 	if abs(ZdynNew.imag)>10**(-10.):
 		Zerror=ZdynNew.imag
 	#return ZdynNew.real,Zerror
-	return 0,Zerror
+	return 0.,Zerror
 	
 def eqX(rhok,Xk,Xpk,Xppk,R2X,s1,s12,s2,f,h,homeg):
 	XPP = Xpk + 2*rhok*Xppk
@@ -117,7 +117,7 @@ def eqX(rhok,Xk,Xpk,Xppk,R2X,s1,s12,s2,f,h,homeg):
 	if abs(XdynNew.imag)>10**(-10.):
   		Xerror=XdynNew.imag
 	#return XdynNew.real,Xerror
-	return 0,Xerror
+	return 0.,Xerror
 
 def findZX0(V,dtZ,dtX):
 	if int(abs(sum(sign(V))))!=Nrho:
