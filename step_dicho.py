@@ -27,15 +27,12 @@ def step_dicho(Vinit):
 	  if Vpre[0]<-0.7:
 	  	phase=0
 	  	break
-	  if Vpre[0]>0:
-	  	phase=1
-		break
 
 	  if(n%(100)==0):
-		  etaZPlot.append(etaZ)
-		  etaXPlot.append(etaX)
-		  Vplot.append(V)
-		if max(abs(VZXerror))>0.:
+		etaZPlot.append(etaZ)
+		etaXPlot.append(etaX)
+		Vplot.append(V)
+	  	if max(abs(np.array(VZXerror)))>0.:
 			print "V,Z or X is not real.... MAIS LOL QUOI !! VZXerror=",VZXerror
 		  
 	
