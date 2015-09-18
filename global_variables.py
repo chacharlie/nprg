@@ -22,9 +22,9 @@ dt = T/NT			# pas de temps
 drho = Lrho/Nrho	# pas de potentiel
 
 # parametres du regulateur
-choixRegu=2		# 1 : regulateur "mou", 2 : regulateur plus violent...
+choixRegu=1		# 1 : regulateur "mou", 2 : regulateur plus violent...
 alpha = 2.		# parametre du regulateur en impulsions
-beta = 0.01		# parametre du regulateur en frequences
+beta = 0.0		# parametre du regulateur en frequences
 
 # variables globales
 rho = linspace(0,Lrho,Nrho)

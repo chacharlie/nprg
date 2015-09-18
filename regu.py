@@ -4,7 +4,9 @@ from numpy import polynomial as poly
 from scipy.interpolate import interp1d
 
 from global_variables import *
-from loadR1 import R1omeg,domegR1omeg
+
+if choixRegu==2:
+	from loadR1 import R1omeg,domegR1omeg
 
 
 # partie spatiale
