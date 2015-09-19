@@ -13,6 +13,28 @@ def step_dicho(Vinit):
 	etaXPlot=[]
 	Vplot=[]
 
+<<<<<<< HEAD
+  for n in range(NT):
+	  V,etaZ,etaX,VZXerror=time_step(V,etaZ,etaX)
+	  Vp=d_rho(V)
+	  if min(Vp)>0:
+	    Vpre=V
+	    Vprepre=Vpre
+	  else:
+	    print "BREAK because of non-monotonity of V' in simu beta=",beta
+	    if Vpre[0]>0.:
+	    	phase=1
+	    break
+	  if Vpre[0]<-0.7:
+	  	phase=0
+	  	break
+
+	  if(n%(100)==0):
+		etaZPlot.append(etaZ)
+		etaXPlot.append(etaX)
+		Vplot.append(V)
+	  	if max(abs(np.array(VZXerror)))>0.:
+=======
 	for n in range(NT):
 		V,etaZ,etaX,VZXerror=time_step(V,etaZ,etaX)
 		Vp=d_rho(V)
@@ -35,7 +57,8 @@ def step_dicho(Vinit):
 			etaZPlot.append(etaZ)
 			etaXPlot.append(etaX)
 			Vplot.append(V)
-		if max(abs(np.array(VZXerror)))>0.:
+		if max(abs(VZXerror))>0.:
+>>>>>>> modeleA
 			print "V,Z or X is not real.... MAIS LOL QUOI !! VZXerror=",VZXerror
 		  
 	

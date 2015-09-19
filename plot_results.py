@@ -10,13 +10,13 @@ NN=1.                   # dimension des spins
 # numerique
 NT = 40000              # nombre de pas de temps (de RG)
 NQ = 50         # nombre de pas pour les impulsions
-Nomeg = 200     # nombre de pas pour les frequences
+Nomeg = 50     # nombre de pas pour les frequences
 Nrho= 30                # nombre de pas pour le potentiel
 
 # geometrique
 T = -30.                                # taille du domaine selon t
 LQ = 4.2                # taille du domaine selon q
-Lomeg = 50              # taille du domaine selon omega
+Lomeg = 12.5              # taille du domaine selon omega
 Lrho = 0.0984*NN/(2**(-1-dim)*pi**((-dim/2))/math.gamma(dim/2)) # taille du domaine selon rho
 dt = T/NT                       # pas de temps
 drho = Lrho/Nrho        # pas de potentiel
@@ -25,15 +25,15 @@ drho = Lrho/Nrho        # pas de potentiel
 rho = linspace(0,Lrho,Nrho)
 
 
-Ndicho=1
-beta=1.
-kappa=3.	
+Ndicho=30
+beta=0.1
+kappa=4.5	
 
 #currentPath=os.path.dirname(os.path.realpath(__file__))
 
 folderPath='results/N1d3alpha2NT40000Nrho30NQ50/'
 
-fileName=folderPath+'Veta-'+str(Ndicho)+'-'+str(Nomeg)+'-'+str(Lomeg)+'-'+str(beta)+'-'+str(kappa)+'-plusomega-regu2'
+fileName=folderPath+'Veta-'+str(Ndicho)+'-'+str(Nomeg)+'-'+str(Lomeg)+'-'+str(beta)+'-'+str(kappa)+'-moinsomega-flotXZcomplets'
 
 data=load(fileName+'.npz')
 matrixZ=data['etaZResults']
@@ -66,7 +66,7 @@ ax1.set_ylim([0, 0.1])
 ax1.set_xlim([0,tmin])
 
 ax2.set_title('Eta X')
-ax2.set_ylim([0, 0.1])
+ax2.set_ylim([0, 0.2])
 ax2.set_xlim([0,tmin])
 
 ax1.legend(loc=4)

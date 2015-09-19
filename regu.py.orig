@@ -4,6 +4,10 @@ from numpy import polynomial as poly
 from scipy.interpolate import interp1d
 
 from global_variables import *
+<<<<<<< HEAD
+=======
+
+>>>>>>> modeleA
 if choixRegu==2:
 	from loadR1 import R1omeg,domegR1omeg
 
@@ -61,10 +65,7 @@ qdomegR1=qq*domegR1
 qR1=qq*R1
 qdqR1=2.*qq*qq*dqR1
 qomegdomegR1=qq*omeg*domegR1
-qomegdomegR12=qq*omeg*domegR1[::-1,:]
+qdomegR12=qq*omeg*domegR1[::-1,:]
 qdqR2=2.*qq*dqR2
 omegdomegR2=omeg*domegR2
 
-### Pour la LPA'
-dqhLPAp = 1+dqhnoZ 
-homegLPAp = qq*(R1+1.)+1j*omeg
