@@ -8,23 +8,31 @@ from regu import *
 
 def eqFlot(VZX,etaZ,etaX):
 	V=VZX[0]
-	Z=ones((rho.size))#VZX[1]
-	X=zeros((rho.size))#VZX[2]	
+	Vp=d_rho(V)
+	Vpp=d2_rho(V)
+#	Z=VZX[1]
+#	Zp=d_rho(Z)
+#	Zpp=d2_rho(Z)
+#	X=VZX[2]
+#	Xp=d_rho(X)
+#	Xpp=d2_rho(X)
+	Z=1.*ones((rho.size))#VZX[1]
+	X=1.*ones((rho.size))#VZX[2]	
+	Zp=zeros((rho.size))
+	Zpp=Zp
+	Xp=Zp
+	Xpp=Zp
+	#etaZ=0.
+	#etaX=0.	
 
 	Vdyn = zeros((rho.size))
 	Verror= zeros((rho.size))
-	Vp=d_rho(V)
-	Vpp=d2_rho(V)
 
 	Xdyn = zeros((rho.size))
 	Xerror= zeros((rho.size))
-	Xp=d_rho(X)
-	Xpp=d2_rho(X)
 	
 	Zdyn = zeros((rho.size))
 	Zerror= zeros((rho.size))
-	Zp=d_rho(Z)
-	Zpp=d2_rho(Z)
 
 
 	s1 = -(etaZ*qR1+qdqR1+(2.-etaZ+etaX)*qomegdomegR1)
@@ -46,7 +54,7 @@ def eqFlot(VZX,etaZ,etaX):
 		
  	Vdim = (-2.+etaZ)*V+(-2.+dim+etaZ)*rho*Vp 
 	Zdim = etaZ*Z+(-2.+dim+etaZ)*rho*Zp
-	Xdim =  etaX*X+(-2.+dim+etaZ)*rho*Xp
+	Xdim = etaX*X+(-2.+dim+etaZ)*rho*Xp
 	
 #	dtZ = Zdim + Zdyn
 #	dtX = Xdim + Xdyn
@@ -54,8 +62,11 @@ def eqFlot(VZX,etaZ,etaX):
 
 	VZXerror = [max(abs(Verror))]+[max(abs(Xerror))]+[max(abs(Zerror))]
 
+	print "Xdim=",Xdim
+
 	#return Vdim+Vdyn,etaZ-(Z0dim+Z0dyn),etaX-(X0dim+X0dyn),VZXerror
-	return np.array([Vdim+Vdyn,Zdim+Zdyn,Xdim+Xdyn]),np.array(VZXerror)
+	#return np.array([Vdim+Vdyn,Zdim+Zdyn,Xdim+Xdyn]),np.array(VZXerror)
+	return np.array([Vdim+Vdyn,Zdim+Zdyn,Xdim]),np.array(VZXerror)
 
 
 def eqV(f,g,s1,s12,s2,homeg):
@@ -85,16 +96,15 @@ def eqZ(rhok,Xk,Xpk,Zk,Zpk,Zppk,R2X,s1,s12,s2,f,homeg):
 	deno2 = homeg**5*homeg[::-1,:]
 	
 	nume3 = -(s12*(4*rhok*qq*(4*dqh[::-1,:]**2*fXp[::-1,:]*homeg**2*(f*R2X + homeg*Xpk) - 2*dqh[::-1,:]*homeg*homeg[::-1,:]*(2*dqR2*f*fXp[::-1,:]*homeg - 2*dqh*f*fXp[::-1,:]*R2X + homeg*((f + fXp[::-1,:])*R2X + homeg*Xpk)*Zpk) + homeg[::-1,:]*(4*dqh**2*f*homeg[::-1,:]*(fXp[::-1,:]*R2X + homeg[::-1,:]*Xpk) - 2*dqh*homeg*homeg[::-1,:]*(2*dqR2*f*fXp[::-1,:] + ((f + fXp[::-1,:])*R2X + homeg[::-1,:]*Xpk)*Zpk) + homeg*(2*dqqR2*f*fXp[::-1,:]*homeg*homeg[::-1,:] - 2*dqqh[::-1,:]*fXp[::-1,:]*homeg*(f*R2X + homeg*Xpk) + homeg[::-1,:]*(-2*dqqh*f*(fXp[::-1,:]*R2X + homeg[::-1,:]*Xpk) + homeg*Zpk*(2*dqR2*(f + fXp[::-1,:]) + R2X*Zpk))))) + dim*homeg*homeg[::-1,:]*(4*dqR2*f*fXp[::-1,:]*homeg*homeg[::-1,:]*rhok - 4*dqh[::-1,:]*fXp[::-1,:]*homeg*rhok*(f*R2X + homeg*Xpk) + homeg[::-1,:]*(-4*dqh*f*rhok*(fXp[::-1,:]*R2X + homeg[::-1,:]*Xpk) + 4*homeg*rhok*((f + fXp[::-1,:])*R2X + (homeg + homeg[::-1,:])*Xpk)*Zpk - homeg*homeg[::-1,:]*R2X*ZPP))))
-	deno3 = homeg[::-1,:]**5*homeg
+	deno3 = homeg[::-1,:]**5*homeg**3
 	
-	ZdynTemp=4.*qdim*dim*(nume1/deno1+nume2/deno2+nume3/deno3)
+	ZdynTemp=4.*qdim*1./dim*(nume1/deno1+nume2/deno2+nume3/deno3)
 	ZdynNew= dot(dot(ZdynTemp,wQ),wOmeg)*1./(2.*pi)
 	
 	Zerror=0.
 	if abs(ZdynNew.imag)>10**(-10.):
 		Zerror=ZdynNew.imag
-	#return ZdynNew.real,Zerror
-	return 0.,Zerror
+	return ZdynNew.real,Zerror
 	
 def eqX(rhok,Xk,Xpk,Xppk,R2X,s1,s12,s2,f,h,homeg):
 	XPP = Xpk + 2*rhok*Xppk
@@ -103,28 +113,28 @@ def eqX(rhok,Xk,Xpk,Xppk,R2X,s1,s12,s2,f,h,homeg):
 	num1 = 4*homeg*rhok*s12*(-1j*domegh[::-1,:] + Xk)*(f*R2X + homeg*Xpk)*(f - 1j*omeg*Xpk) - homeg[::-1,:]*s12*(4*rhok*(1j*f + omeg*Xpk)*(domegR2*f*homeg - f*R2X*(domegh + 1j*Xk) + 1j*homeg*R2X*Xpk) + homeg[::-1,:]*(4*f*rhok*(-1j*domegh + Xk)*Xpk + homeg*Xpk*(R2X - 4*rhok*Xpk) + 2*homeg*R2X*rhok*Xppk))
 	den1 = -homeg[::-1,:]**4*homeg**2
 
-	num2 = -(4*rhok*s12*R2X*(f**2*Xk - 2*f*homeg*Xpk + 1j*f*omeg*Xk*Xpk - 1j*homeg*omeg*Xpk**2 + domegh*f*(-1j*f + omeg*Xpk)) - homeg**2*homeg[::-1,:]*s2*XPP)
+	num2 = (4*rhok*s12*R2X*(f**2*Xk - 2*f*homeg*Xpk + 1j*f*omeg*Xk*Xpk - 1j*homeg*omeg*Xpk**2 + domegh*f*(-1j*f + omeg*Xpk)) - homeg**2*homeg[::-1,:]*s2*XPP)
 	den2 = homeg[::-1,:]**2*homeg**3
 
 	num3 = 4*f**2*rhok*Xk*(-(R2*s1) + homeg*s2 + s1*Xk) - 4*f*rhok*(2*homeg**2*s2 + s1*(homeg[::-1,:] + 1j*omeg*R2X)*Xk + homeg*(-2*R2*s1 + 2*s1*Xk - 1j*omeg*s2*Xk))*Xpk - 4.*1j*rhok*(homeg*(1j*homeg[::-1,:]*s1 - omeg*R2*s1 + homeg*omeg*s2) + (homeg + homeg[::-1,:])*omeg*s1*Xk)*Xpk**2 + 4.*1j*domegh*rhok*(f + 1j*omeg*Xpk)*(f*(R2*s1 - homeg*s2 - s1*Xk) + homeg[::-1,:]*s1*Xpk) - homeg**2*s1*R2X*XPP
 	den3 = -homeg[::-1,:]*homeg**4
-	
 
 	XdynTemp=4.*qdim*(num1/den1+num2/den2+num3/den3)
 	XdynNew= dot(dot(XdynTemp,wQ),wOmeg)*1./(2.*pi)
-	
+
 	Xerror=0.
 	if abs(XdynNew.imag)>10**(-10.):
   		Xerror=XdynNew.imag
-	#return XdynNew.real,Xerror
-	return 0.,Xerror
+	return XdynNew.real,Xerror
 
 def findZX0(V,dtZ,dtX):
-	if int(abs(sum(sign(V))))!=Nrho:
-		VinterpRho0=interp1d(V.real,rho)
-		rho0=float(VinterpRho0(0.))
-		dtZinterp=interp1d(rho,dtZ)
-		dtXinterp=interp1d(rho,dtX)
-		return dtZinterp(rho0),dtXinterp(rho0)
-	else:
-		return dtZ[0],dtX[0]
+	rhoi=0
+	return 0,dtX[rhoi]#dtZ[rhoi],dtX[rhoi]
+#	if int(abs(sum(sign(V))))!=Nrho:
+#		VinterpRho0=interp1d(V.real,rho)
+#		rho0=float(VinterpRho0(0.))
+#		dtZinterp=interp1d(rho,dtZ)
+#		dtXinterp=interp1d(rho,dtX)
+#		return dtZinterp(rho0),dtXinterp(rho0)
+#	else:
+#		return dtZ[0],dtX[0]

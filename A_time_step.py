@@ -21,6 +21,10 @@ def time_step(VZX,etaZ,etaX):
 	
 	VZX_new = VZX + dt/6.*(VZX1+2*VZX2+2*VZX3+VZX4)
 
-	dtZ0,dtX0=findZX0(VZX_new[0],VZX_new[1],VZX_new[2])
+	#dtZ0,dtX0=findZX0(VZX_new[0],VZX_new[1],VZX_new[2])
+	dtZ0,dtX0=findZX0(VZX_new[0],VZX[1],VZX[2])
 	
-	return VZX_new,etaZ-dtZ0,etaX-dtX0,VZXerror
+	etaX_new=etaX-etaX
+	print dtX0,VZX[2][0]
+		
+	return VZX_new,etaZ-dtZ0,etaX_new,VZXerror

@@ -8,12 +8,12 @@ from A_step_dicho import *
 
 Ndicho=1
 
-kmin=3.
-kmax=3.
+kmin=4.
+kmax=4.
 kappa=(kmin+kmax)/2.
 
 folderPath='A_results/N'+str(int(NN))+'d'+str(int(dim))+'alpha'+str(int(alpha))+'NT'+str(NT)+'Nrho'+str(Nrho)+'NQ'+str(NQ)+'/'
-fileName=folderPath+'Veta-'+str(Ndicho)+'-'+str(Nomeg)+'-'+str(Lomeg)+'-'+str(beta)+'-'+str(kappa)+'-'+str(choixRegu)+'-moinsomega'
+fileName=folderPath+'Veta-'+str(Ndicho)+'-'+str(Nomeg)+'-'+str(Lomeg)+'-'+str(beta)+'-'+str(kappa)+'-'+str(choixRegu)+'-moinsomega-test'
 etaZResults=[]
 etaXResults=[]
 Vresults=[]
@@ -27,8 +27,8 @@ for i in range(Ndicho):
   kappa=(kmin+kmax)/2.
   print "kappa=",kappa
   Vinit= 0.1*(rho-kappa)
-  Zinit= ones((rho.size))
-  Xinit=0.1*Zinit
+  Zinit= 1.*ones((rho.size))
+  Xinit = 0.01*ones((rho.size))
   
   phase,etaZPlot,etaXPlot,Vplot,Zplot,Xplot=step_dicho(Vinit,Zinit,Xinit) #phase=0 : low temp, =1, high temp
   
