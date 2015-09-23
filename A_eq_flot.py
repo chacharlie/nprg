@@ -6,22 +6,22 @@ from global_variables import *
 from diff_op import *
 from regu import *
 
-def eqFlot(VZX,etaZ,etaX):
+def eqFlot(VZX,etaZ,etaX,computeEta):
 	V=VZX[0]
 	Vp=d_rho(V)
 	Vpp=d2_rho(V)
-#	Z=VZX[1]
-#	Zp=d_rho(Z)
-#	Zpp=d2_rho(Z)
-#	X=VZX[2]
-#	Xp=d_rho(X)
-#	Xpp=d2_rho(X)
-	Z=1.*ones((rho.size))#VZX[1]
-	X=1.*ones((rho.size))#VZX[2]	
-	Zp=zeros((rho.size))
-	Zpp=Zp
-	Xp=Zp
-	Xpp=Zp
+	Z=VZX[1]
+	Zp=d_rho(Z)
+	Zpp=d2_rho(Z)
+	X=VZX[2]
+	Xp=d_rho(X)
+	Xpp=d2_rho(X)
+#	Z=1.*ones((rho.size))#VZX[1]
+#	X=1.*ones((rho.size))#VZX[2]	
+#	Zp=zeros((rho.size))
+#	Zpp=Zp
+#	Xp=Zp
+#	Xpp=Zp
 	#etaZ=0.
 	#etaX=0.	
 
@@ -55,19 +55,18 @@ def eqFlot(VZX,etaZ,etaX):
  	Vdim = (-2.+etaZ)*V+(-2.+dim+etaZ)*rho*Vp 
 	Zdim = etaZ*Z+(-2.+dim+etaZ)*rho*Zp
 	Xdim = etaX*X+(-2.+dim+etaZ)*rho*Xp
-	
-#	dtZ = Zdim + Zdyn
-#	dtX = Xdim + Xdyn
-#	dtZ0,dtX0 = findZX0(V,dtZ,dtX)
+
+	dtV = Vdim+Vdyn
+	dtZ = Zdim+Zdyn
+	dtX = Xdim+Xdyn
 
 	VZXerror = [max(abs(Verror))]+[max(abs(Xerror))]+[max(abs(Zerror))]
 
-	print "Xdim=",Xdim
-
-	#return Vdim+Vdyn,etaZ-(Z0dim+Z0dyn),etaX-(X0dim+X0dyn),VZXerror
-	#return np.array([Vdim+Vdyn,Zdim+Zdyn,Xdim+Xdyn]),np.array(VZXerror)
-	return np.array([Vdim+Vdyn,Zdim+Zdyn,Xdim]),np.array(VZXerror)
-
+	if computeEta==1:	
+		dtZ0,dtX0 = findZX0(V,Vp,Zp,Xp,dtV,dtZ,dtX)
+		return np.array([dtV,dtZ,dtX]),etaZ-dtZ0,etaX-dtX0,np.array(VZXerror)
+	else:
+		return np.array([dtV,dtZ,dtX]),np.array(VZXerror)
 
 def eqV(f,g,s1,s12,s2,homeg):
 	term1 = (g[::-1,:] + f*R2)*s1/(homeg[::-1,:]*homeg**2)
@@ -127,14 +126,17 @@ def eqX(rhok,Xk,Xpk,Xppk,R2X,s1,s12,s2,f,h,homeg):
   		Xerror=XdynNew.imag
 	return XdynNew.real,Xerror
 
-def findZX0(V,dtZ,dtX):
-	rhoi=0
-	return 0,dtX[rhoi]#dtZ[rhoi],dtX[rhoi]
-#	if int(abs(sum(sign(V))))!=Nrho:
-#		VinterpRho0=interp1d(V.real,rho)
-#		rho0=float(VinterpRho0(0.))
-#		dtZinterp=interp1d(rho,dtZ)
-#		dtXinterp=interp1d(rho,dtX)
-#		return dtZinterp(rho0),dtXinterp(rho0)
-#	else:
-#		return dtZ[0],dtX[0]
+def findZX0(V,Vp,Zp,Xp,dtV,dtZ,dtX):
+	if int(abs(sum(sign(V))))!=Nrho:
+		VinterpRho0=interp1d(V.real,rho)
+		rho0=float(VinterpRho0(0.))
+		dtZinterp=interp1d(rho,dtZ)
+		dtXinterp=interp1d(rho,dtX)
+		dtVinterp=interp1d(rho,dtV)
+		VpInterp=interp1d(rho,Vp)
+		ZpInterp=interp1d(rho,Zp)
+		XpInterp=interp1d(rho,Xp)
+		dtRho0 = - dtVinterp(rho0)/VpInterp(rho0)
+		return dtZinterp(rho0)+ZpInterp(rho0)*dtRho0,dtXinterp(rho0)+XpInterp(rho0)*dtRho0
+	else:
+		return dtZ[0]-Zp[0]*dtV[0]/Vp[0],dtX[0]-Xp[0]*dtV[0]/Vp[0]

@@ -28,6 +28,7 @@ def d_rho(F):
 	
 
 	# return Fp/drho
+#	return gradient(F,edge_order=2)/drho
 	return gradient(F)/drho
 	
 def d2_rho(F):
@@ -38,4 +39,5 @@ def d2_rho(F):
 	# Fpp[-2] = -F[-5]/12. + 1./3*F[-4]+F[-3]/2. -5./3*F[-2] + 11./12*F[-1]
 	# Fpp[2:-2] = -F[0:-4]/12.+4./3*F[1:-3]-5./2*F[2:-2]+4./3*F[3:-1]-1./12*F[4:]
 	# return Fpp/drho**2
+#	return gradient(gradient(F,edge_order=2),edge_order=2)/drho**2
 	return gradient(gradient(F))/drho**2

@@ -32,8 +32,6 @@ def eqFlot(V,etaZ,etaX):
 	
 	VZXerror = max(abs(Verror))+ZXerror
 
-	print X0dim
-
 	return Vdim+Vdyn,etaZ-(Z0dim+Z0dyn),etaX-(X0dim+X0dyn),ZXerror
 
 

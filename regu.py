@@ -20,14 +20,14 @@ regupp = 2.*regu**3*exp(2.*q**2)/alpha**2+regup
 
 # DANS R1, on change R1(omeg) en R1(-omeg) pour etre en accord avec les conventions (contradictoires) entre la def de R1 de facon causale, et les conventions "arbitraires" de la definition de R1(omeg)  
 if choixRegu==1:
-	R1 = 1j/(1j-beta*omeg)*regu
-	dqR1 = 1j/(1j-beta*omeg)*regup
-	dqqR1 = 1j/(1j-beta*omeg)*regupp
-	domegR1 = +1j*beta/(1j-beta*omeg)**2*regu
-	#R1 = 1j/(1j+beta*omeg)*regu
-	#dqR1 = 1j/(1j+beta*omeg)*regup
-	#dqqR1 = 1j/(1j+beta*omeg)*regupp
-	#domegR1 = -1j*beta/(1j+beta*omeg)**2*regu
+#	R1 = 1j/(1j-beta*omeg)*regu
+#	dqR1 = 1j/(1j-beta*omeg)*regup
+#	dqqR1 = 1j/(1j-beta*omeg)*regupp
+#	domegR1 = +1j*beta/(1j-beta*omeg)**2*regu
+	R1 = 1j/(1j+beta*omeg)*regu
+	dqR1 = 1j/(1j+beta*omeg)*regup
+	dqqR1 = 1j/(1j+beta*omeg)*regupp
+	domegR1 = -1j*beta/(1j+beta*omeg)**2*regu
 
 elif choixRegu==2:
 	R1 = regu*R1omeg

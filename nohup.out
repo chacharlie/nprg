@@ -1,0 +1,42 @@
+i= 0  time = 2.19345092773e-05 for simu  A_results/N1d3alpha2NT40000Nrho30NQ50/Veta-10-100-25-0.0-2.25-1-moinsomega
+kappa= 2.25
+i= 1  time = 592.205934048 for simu  A_results/N1d3alpha2NT40000Nrho30NQ50/Veta-10-100-25-0.0-2.25-1-moinsomega
+kappa= 1.375
+i= 2  time = 1518.50226307 for simu  A_results/N1d3alpha2NT40000Nrho30NQ50/Veta-10-100-25-0.0-2.25-1-moinsomega
+kappa= 0.9375
+i= 3  time = 2825.2429359 for simu  A_results/N1d3alpha2NT40000Nrho30NQ50/Veta-10-100-25-0.0-2.25-1-moinsomega
+kappa= 0.71875
+i= 4  time = 4660.0447979 for simu  A_results/N1d3alpha2NT40000Nrho30NQ50/Veta-10-100-25-0.0-2.25-1-moinsomega
+kappa= 0.609375
+i= 5  time = 6939.78154302 for simu  A_results/N1d3alpha2NT40000Nrho30NQ50/Veta-10-100-25-0.0-2.25-1-moinsomega
+kappa= 0.6640625
+i= 6  time = 9157.19087195 for simu  A_results/N1d3alpha2NT40000Nrho30NQ50/Veta-10-100-25-0.0-2.25-1-moinsomega
+kappa= 0.63671875
+i= 7  time = 11847.2042429 for simu  A_results/N1d3alpha2NT40000Nrho30NQ50/Veta-10-100-25-0.0-2.25-1-moinsomega
+kappa= 0.623046875
+i= 8  time = 15466.048877 for simu  A_results/N1d3alpha2NT40000Nrho30NQ50/Veta-10-100-25-0.0-2.25-1-moinsomega
+kappa= 0.6162109375
+i= 9  time = 18246.4688311 for simu  A_results/N1d3alpha2NT40000Nrho30NQ50/Veta-10-100-25-0.0-2.25-1-moinsomega
+kappa= 0.61962890625
+SIMU beta= 0.0  IS TERMINAOUCH after  21782.8887279 seconds
+i= 0  time = 3.50475311279e-05 for simu  A_results/N1d3alpha2NT40000Nrho30NQ50/Veta-10-200-50-0.0-2.25-1-moinsomega
+kappa= 2.25
+i= 1  time = 1577.16181183 for simu  A_results/N1d3alpha2NT40000Nrho30NQ50/Veta-10-200-50-0.0-2.25-1-moinsomega
+kappa= 1.375
+i= 2  time = 4525.43081784 for simu  A_results/N1d3alpha2NT40000Nrho30NQ50/Veta-10-200-50-0.0-2.25-1-moinsomega
+kappa= 0.9375
+i= 3  time = 6746.82760501 for simu  A_results/N1d3alpha2NT40000Nrho30NQ50/Veta-10-200-50-0.0-2.25-1-moinsomega
+kappa= 1.15625
+i= 4  time = 11254.8980091 for simu  A_results/N1d3alpha2NT40000Nrho30NQ50/Veta-10-200-50-0.0-2.25-1-moinsomega
+kappa= 1.046875
+i= 5  time = 14743.6522141 for simu  A_results/N1d3alpha2NT40000Nrho30NQ50/Veta-10-200-50-0.0-2.25-1-moinsomega
+kappa= 1.1015625
+i= 6  time = 22477.8964529 for simu  A_results/N1d3alpha2NT40000Nrho30NQ50/Veta-10-200-50-0.0-2.25-1-moinsomega
+kappa= 1.07421875
+i= 7  time = 26777.752584 for simu  A_results/N1d3alpha2NT40000Nrho30NQ50/Veta-10-200-50-0.0-2.25-1-moinsomega
+kappa= 1.087890625
+i= 8  time = 31944.4384739 for simu  A_results/N1d3alpha2NT40000Nrho30NQ50/Veta-10-200-50-0.0-2.25-1-moinsomega
+kappa= 1.0947265625
+i= 9  time = 38133.939425 for simu  A_results/N1d3alpha2NT40000Nrho30NQ50/Veta-10-200-50-0.0-2.25-1-moinsomega
+kappa= 1.09814453125
+SIMU beta= 0.0  IS TERMINAOUCH after  45920.0679688 seconds
