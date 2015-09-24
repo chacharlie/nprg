@@ -2,6 +2,8 @@ from pylab import *
 from numpy import *
 import  matplotlib.pyplot as plt
 
+from load_results import *
+
 f1=plt.figure()
 f2=plt.figure()
 f3=plt.figure()
@@ -17,9 +19,9 @@ for i in range(Ndicho):
   ax1.plot(ti,matrixEtaZ[i], label="step="+str(i),marker='o')
   ax2.plot(ti,matrixEtaX[i], label="step="+str(i),marker='o')
 
-for j in range(len(matrixV[index])):
+for j in range(len(matrixV[indexPlotV])):
   if (j%5)==0:
-    ax3.plot(rho,matrixV[index][j],label="time="+str(j),marker='o')
+    ax3.plot(rho,matrixV[indexPlotV][j],label="time="+str(j),marker='o')
 
 
 ax1.set_title('Eta Z')

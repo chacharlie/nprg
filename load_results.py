@@ -27,10 +27,11 @@ Ndicho=30
 beta=0.1
 kappa=4.5	
 
+choixRegu=1
 
 folderPath='results/N1d3alpha2NT40000Nrho30NQ50/'
 
-fileName=folderPath+'Veta-'+str(Ndicho)+'-'+str(Nomeg)+'-'+str(Lomeg)+'-'+str(beta)+'-'+str(kappa)+'-moinsomega-flotXZcomplets'
+fileName=folderPath+'Veta-'+str(Ndicho)+'-'+str(Nomeg)+'-'+str(Lomeg)+'-'+str(beta)+'-'+str(kappa)+'-'+str(choixRegu)+'-moinsomega-flotXZcomplets'
 
 data=load(fileName+'.npz')
 matrixEtaZ=data['etaZResults']
