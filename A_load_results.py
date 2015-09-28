@@ -24,8 +24,8 @@ rho = linspace(0,Lrho,Nrho)
 
 
 Ndicho=30
-beta=0.1
-kappa=1.25	
+beta=0.01
+kappa=2.25	
 
 choixRegu=1
 

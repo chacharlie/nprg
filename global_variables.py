@@ -2,29 +2,36 @@ from pylab import *
 import numpy as np
 from numpy import polynomial as poly
 
+#modele
+model='A'
+
 # physique
 dim=3.			# dimension d'espace
 NN=1. 			# dimension des spins
 
 # numerique
-NT = 40000		# nombre de pas de temps (de RG)
 NQ = 50		# nombre de pas pour les impulsions
 Nomeg = 200	# nombre de pas pour les frequences
 Nrho= 30		# nombre de pas pour le potentiel
 #rho0i = 14		# indice du potentiel pour l'evaluation de eta
 
+#Runge-Kutta adaptatif
+NT = 40000		# nombre de pas de temps initial
+T = -30.		# taille maximale du domaine selon le temps de RG
+atol = 10**(-6.)	# tolerance absolue sur l'erreur dans le Runge-Kutta
+rtol = 10**(-6.)  	# tolerance relative
+
+
 # geometrique
-T = -30.				# taille du domaine selon t
 LQ = 4.2		# taille du domaine selon q
 Lomeg = 50		# taille du domaine selon omega
 Lrho = 0.0984*NN/(2**(-1-dim)*pi**((-dim/2))/math.gamma(dim/2))	# taille du domaine selon rho
-dt = T/NT			# pas de temps
 drho = Lrho/Nrho	# pas de potentiel
 
 # parametres du regulateur
 choixRegu=1		# 1 : regulateur "mou", 2 : regulateur plus violent...
 alpha = 2.		# parametre du regulateur en impulsions
-beta = 1.		# parametre du regulateur en frequences
+beta = 0.1		# parametre du regulateur en frequences
 
 # variables globales
 rho = linspace(0,Lrho,Nrho)

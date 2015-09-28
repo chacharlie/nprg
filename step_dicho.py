@@ -2,41 +2,49 @@ from pylab import *
 import numpy as np
 
 from global_variables import *
-from time_step import *
+from time_stepper import *
 
-def step_dicho(Vinit):
+def step_dicho(yinit):
   
-	V=Vinit
+	y=yinit
+	dty=zeros((size(y)))
 	etaZ=0.01
 	etaX=0.01
+	h=T/NT
+
+	stepCount=0
+	t=0.	
 	etaZPlot=[]
 	etaXPlot=[]
-	Vplot=[]
+	yplot=[]
+	tPlot=[]
 
-	for n in range(NT):
-		V,etaZ,etaX,VZXerror=time_step(V,etaZ,etaX)
-		Vp=d_rho(V)
-		if min(Vp)>0:
-	   		Vpre=V
-			Vprepre=Vpre
-	  	else:
-	    		print "BREAK because of non-monotonity of V' in simu beta=",beta
-	    	if Vpre[0]>0.:
+	while t>T: # (RG-time is negative)
+		h,hdid,y,dty,etaZ,etaX = stepper(h,y,dty,etaZ,etaX)
+		t += hdid
+		if model=='ON':
+			yp=d_rho(y)
+		elif model=='A':
+			yp=d_rho(y[0:Nrho])
+		if min(yp)<0:
+	    		print "BREAK because of non-monotonity of y' in simu beta=",beta
+	    	if y[0]>0.:
 	    		phase=1
 	    		break
-	  	if Vpre[0]<-0.7:
+	  	if y[0]<-0.7:
 	  		phase=0
 		  	break
-		if Vpre[0]>0:
-	  		phase=1
-			break
 
-		if(n%(100)==0):
+		if(stepCount%(5)==0):
 			etaZPlot.append(etaZ)
 			etaXPlot.append(etaX)
-			Vplot.append(V)
-		if max(abs(np.array(VZXerror)))>0.:
-			print "V,Z or X is not real.... MAIS LOL QUOI !! VZXerror=",VZXerror
+			yplot.append(y)
+			tPlot.append(t)
+		
+		stepCount+=1
+
+#		if max(abs(np.array(VZXerror)))>0.:
+#			print "V,Z or X is not real.... MAIS LOL QUOI !! VZXerror=",VZXerror
 		  
 	
-	return phase,etaZPlot,etaXPlot,Vplot
+	return phase,etaZPlot,etaXPlot,yplot,tPlot
