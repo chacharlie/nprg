@@ -26,8 +26,6 @@ def step_dicho(yinit):
 			yp=d_rho(y)
 		elif model=='A':
 			yp=d_rho(y[0:Nrho])
-		if min(yp)<0:
-	    		print "BREAK because of non-monotonity of y' in simu beta=",beta
 	    	if y[0]>0.:
 	    		phase=1
 	    		break
@@ -36,6 +34,8 @@ def step_dicho(yinit):
 		  	break
 
 		if(stepCount%(5)==0):
+			if min(yp)<0:
+	    			print "y is not monotonous at t=",t
 			etaZPlot.append(etaZ)
 			etaXPlot.append(etaX)
 			yplot.append(y)

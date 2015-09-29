@@ -10,39 +10,49 @@ def eqFlow(VZX,etaZ,etaX,computeEta):
 	V=VZX[0:Nrho]
 	Vp=d_rho(V)
 	Vpp=d2_rho(V)
-	Z=VZX[Nrho:2*Nrho]
-	Zp=d_rho(Z)
-	Zpp=d2_rho(Z)
-	X=VZX[2*Nrho:3*Nrho]
-	Xp=d_rho(X)
-	Xpp=d2_rho(X)
-#	Z=1.*ones((rho.size))#VZX[1]
-#	X=1.*ones((rho.size))#VZX[2]	
-#	Zp=zeros((rho.size))
-#	Zpp=Zp
-#	Xp=Zp
-#	Xpp=Zp
-	#etaZ=0.
-	#etaX=0.	
+	if approx==1:
+		X = 1.*ones((rho.size))
+		Xp = zeros((rho.size))
+		Xpp = zeros((rho.size))
+		Z = 1.*ones((rho.size))
+		Zp = zeros((rho.size))
+		Zpp = zeros((rho.size))
+	if approx==2:
+		X = 1.*ones((rho.size))
+		Xp = zeros((rho.size))
+		Xpp = zeros((rho.size))
+		Z=VZX[Nrho:2*Nrho]
+		Zp=d_rho(Z)
+		Zpp=d2_rho(Z)
+	if approx==3:
+		Z = 1.*ones((rho.size))
+		Zp = zeros((rho.size))
+		Zpp = zeros((rho.size))
+		X=VZX[2*Nrho:3*Nrho]
+		Xp=d_rho(X)
+		Xpp=d2_rho(X)
+	if approx==4:
+		Z=VZX[Nrho:2*Nrho]
+		Zp=d_rho(Z)
+		Zpp=d2_rho(Z)
+		X=VZX[2*Nrho:3*Nrho]
+		Xp=d_rho(X)
+		Xpp=d2_rho(X)
+
 	Vdyn = zeros((rho.size))
 	Verror= zeros((rho.size))
-
 	Xdyn = zeros((rho.size))
 	Xerror= zeros((rho.size))
-	
 	Zdyn = zeros((rho.size))
 	Zerror= zeros((rho.size))
 
-
 	s1 = -(etaZ*qR1+qdqR1+(2.-etaZ+etaX)*qomegdomegR1)
 	s12 = -(etaZ*qR1[::-1,:]+qdqR1[::-1,:]+(2.-etaZ+etaX)*qomegdomegR12)#s1[::-1,:] 
-	#s1R = (-1.+R2)*s1
-	#s12R = (-1.+R2[::-1,:])*s12 #s1R[::-1,:] 
 	s2 = -(etaX*R2+qdqR2+(2-etaZ+etaX)*omegdomegR2)
 	
 	for k in range(Nrho):
 		h = qq*(R1+Z[k])+V[k]+2.*rho[k]*Vp[k]
-		homeg = h+1j*omeg*X[k] #homeg+V[k]+2.*rho[k]*Vp[k]
+		homeg = h+1j*omeg*X[k]
 		f= qq*Zp[k]+3.*Vp[k]+2.*rho[k]*Vpp[k]
 		g = homeg*Xp[k]-X[k]*f
 		R2X=R2-X[k]

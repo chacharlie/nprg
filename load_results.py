@@ -21,22 +21,30 @@ rho = linspace(0,Lrho,Nrho)
 
 #Runge-Kutta adaptatif
 atol = 10**(-6.)	# tolerance absolue sur l'erreur dans le Runge-Kutta
-rtol = 10**(-6.)  	# tolerance relative
+rtol = 0.*10**(-6.)  	# tolerance relative
 
-Ndicho=12
+Ndicho=55
 propDicho=0.4
 
 beta=0.
-kappa=2.1	
+kappa=1.5	
 
 model='A'
+approx=4
 choixRegu=1
+
+afficheNu=True
+indexPlotV=54
+
 
 #folderPath='results/N1d3alpha2NT40000Nrho30NQ50/'
 folderPath='results/N1d3alpha2Nrho30NQ50/'
 
-fileName=folderPath+model+'-'+str(Ndicho)+'-'+str(atol)+'-'+str(rtol)+'-'+str(Nomeg)+'-'+str(Lomeg)\
+fileName=folderPath+model+'-'+str(approx)+'-'+str(Ndicho)+'-'+str(atol)+'-'+str(rtol)+'-'+str(Nomeg)+'-'+str(Lomeg)\
 	+'-'+str(beta)+'-'+str(kappa)+'-'+str(choixRegu)+'-'+str(propDicho)+'-moinsomega'
+
+#fileName=folderPath+model+'-'+str(Ndicho)+'-'+str(atol)+'-'+str(rtol)+'-'+str(Nomeg)+'-'+str(Lomeg)\
+#	+'-'+str(beta)+'-'+str(kappa)+'-'+str(choixRegu)+'-'+str(propDicho)+'-moinsomega'
 
 
 #fileName=folderPath+'Veta-'+str(Ndicho)+'-'+str(atol)+'-'+str(rtol)+'-'+str(Nomeg)+'-'+str(Lomeg)+\
@@ -49,7 +57,8 @@ matrixEtaZ=data['etaZResults']
 matrixEtaX=data['etaXResults']
 matrixy=data['yResults']
 #matrixy=data['Vresults']
+matrixKappa=data['kappaResults']
 matrixT=data['tResults']
 
 
-indexPlotV=0
+

@@ -4,6 +4,8 @@ from numpy import polynomial as poly
 
 #modele
 model='A'
+approx=3	#1: LPA', 2: Z complet, 3: X complet, 4: X,Z complets
+
 
 # physique
 dim=3.			# dimension d'espace
@@ -19,7 +21,7 @@ Nrho= 30		# nombre de pas pour le potentiel
 NT = 40000		# nombre de pas de temps initial
 T = -30.		# taille maximale du domaine selon le temps de RG
 atol = 10**(-6.)	# tolerance absolue sur l'erreur dans le Runge-Kutta
-rtol = 10**(-6.)  	# tolerance relative
+rtol = 0.*10**(-6.)  	# tolerance relative
 
 
 # geometrique
@@ -31,7 +33,7 @@ drho = Lrho/Nrho	# pas de potentiel
 # parametres du regulateur
 choixRegu=1		# 1 : regulateur "mou", 2 : regulateur plus violent...
 alpha = 2.		# parametre du regulateur en impulsions
-beta = 0.1		# parametre du regulateur en frequences
+beta = 0.5		# parametre du regulateur en frequences
 
 # variables globales
 rho = linspace(0,Lrho,Nrho)
