@@ -2,7 +2,7 @@ from pylab import *
 import numpy as np
 
 from global_variables import *
-from time_stepper import *
+from time_stepper2 import *
 
 def step_dicho(yinit):
   

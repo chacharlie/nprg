@@ -7,12 +7,12 @@ NN=1.                   # dimension des spins
 
 # numerique
 NQ = 50         # nombre de pas pour les impulsions
-Nomeg = 200     # nombre de pas pour les frequences
+Nomeg = 100     # nombre de pas pour les frequences
 Nrho= 30                # nombre de pas pour le potentiel
 
 # geometrique
 LQ = 4.2                # taille du domaine selon q
-Lomeg = 50              # taille du domaine selon omega
+Lomeg = 25.              # taille du domaine selon omega
 Lrho = 0.0984*NN/(2**(-1-dim)*pi**((-dim/2))/math.gamma(dim/2)) # taille du domaine selon rho
 drho = Lrho/Nrho        # pas de potentiel
 
@@ -20,28 +20,34 @@ drho = Lrho/Nrho        # pas de potentiel
 rho = linspace(0,Lrho,Nrho)
 
 #Runge-Kutta adaptatif
-atol = 10**(-6.)	# tolerance absolue sur l'erreur dans le Runge-Kutta
-rtol = 0.*10**(-6.)  	# tolerance relative
+atol = 1e-6	# tolerance absolue sur l'erreur dans le Runge-Kutta
+rtol = 0*.1e-6  	# tolerance relative
 
-Ndicho=55
+Ndicho=10
 propDicho=0.4
 
 beta=0.
-kappa=1.5	
+kappa=3.1	
 
 model='A'
-approx=4
+approx=3
 choixRegu=1
 
+edgeOrder5=True
+
 afficheNu=True
-indexPlotV=54
+printKappa=False
+indexPlotV=Ndicho-1
 
 
 #folderPath='results/N1d3alpha2NT40000Nrho30NQ50/'
 folderPath='results/N1d3alpha2Nrho30NQ50/'
 
 fileName=folderPath+model+'-'+str(approx)+'-'+str(Ndicho)+'-'+str(atol)+'-'+str(rtol)+'-'+str(Nomeg)+'-'+str(Lomeg)\
-	+'-'+str(beta)+'-'+str(kappa)+'-'+str(choixRegu)+'-'+str(propDicho)+'-moinsomega'
+	+'-'+str(beta)+'-'+str(kappa)+'-'+str(choixRegu)+'-'+str(propDicho)+'-moinsomega-stepper2-edge5-'+str(edgeOrder5)
+
+#fileName=folderPath+model+'-'+str(approx)+'-'+str(Ndicho)+'-'+str(atol)+'-'+str(rtol)+'-'+str(Nomeg)+'-'+str(Lomeg)\
+#	+'-'+str(beta)+'-'+str(kappa)+'-'+str(choixRegu)+'-'+str(propDicho)+'-moinsomega'
 
 #fileName=folderPath+model+'-'+str(Ndicho)+'-'+str(atol)+'-'+str(rtol)+'-'+str(Nomeg)+'-'+str(Lomeg)\
 #	+'-'+str(beta)+'-'+str(kappa)+'-'+str(choixRegu)+'-'+str(propDicho)+'-moinsomega'
@@ -59,6 +65,3 @@ matrixy=data['yResults']
 #matrixy=data['Vresults']
 matrixKappa=data['kappaResults']
 matrixT=data['tResults']
-
-
-

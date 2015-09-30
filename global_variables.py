@@ -15,18 +15,21 @@ NN=1. 			# dimension des spins
 NQ = 50		# nombre de pas pour les impulsions
 Nomeg = 200	# nombre de pas pour les frequences
 Nrho= 30		# nombre de pas pour le potentiel
-#rho0i = 14		# indice du potentiel pour l'evaluation de eta
+
+# Ordre des derivees en rho, et ordre des derivees au bord...
+diffOrder = 3
+edgeOrder = 5 
 
 #Runge-Kutta adaptatif
 NT = 40000		# nombre de pas de temps initial
 T = -30.		# taille maximale du domaine selon le temps de RG
-atol = 10**(-6.)	# tolerance absolue sur l'erreur dans le Runge-Kutta
-rtol = 0.*10**(-6.)  	# tolerance relative
+atol = 1.e-6	# tolerance absolue sur l'erreur dans le Runge-Kutta
+rtol = 0*1.e-6  	# tolerance relative
 
 
 # geometrique
 LQ = 4.2		# taille du domaine selon q
-Lomeg = 50		# taille du domaine selon omega
+Lomeg = 50.		# taille du domaine selon omega
 Lrho = 0.0984*NN/(2**(-1-dim)*pi**((-dim/2))/math.gamma(dim/2))	# taille du domaine selon rho
 drho = Lrho/Nrho	# pas de potentiel
 

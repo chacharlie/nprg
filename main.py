@@ -2,12 +2,13 @@ from pylab import *
 import numpy as np
 import matplotlib.pyplot as plt
 from time import time
+from decimal import Decimal
 
 from global_variables import *
 from step_dicho import *
 from weigth_dicho import *
 
-Ndicho=55
+Ndicho=10
 propDicho=0.4
 
 kmin=0.2
@@ -16,7 +17,7 @@ kappa=(kmin+kmax)/2.
 
 folderPath='results/N'+str(int(NN))+'d'+str(int(dim))+'alpha'+str(int(alpha))+'Nrho'+str(Nrho)+'NQ'+str(NQ)+'/'
 fileName=folderPath+model+'-'+str(approx)+'-'+str(Ndicho)+'-'+str(atol)+'-'+str(rtol)+'-'+str(Nomeg)+'-'+str(Lomeg)\
-	+'-'+str(beta)+'-'+str(kappa)+'-'+str(choixRegu)+'-'+str(propDicho)+'-plusomega'
+	+'-'+str(beta)+'-'+str(kappa)+'-'+str(choixRegu)+'-'+str(propDicho)+'-moinsomega-stepper2-diff-'+str(diffOrder)+'-'+str(edgeOrder)
 	
 etaZResults=[]
 etaXResults=[]
@@ -36,10 +37,11 @@ for i in range(Ndicho):
     wMin,wMax = weigthDicho(etaZlowT,etaZhighT,propDicho)
     kappa = wMin*kmin+wMax*kmax	
     print "weigth is ON !! SBBLAAHH !!",wMin,wMax
-  print "kappa=",kappa
+  
+  print "kappa=",Decimal(kappa)
   
   if model=='ON':
-    Vinit=0.1*(rho-kappa)  
+    Vinit=0.1*(rho-kappa) 
     phase,etaZPlot,etaXPlot,yPlot,tPlot=step_dicho(Vinit) #phase=0 : low temp, =1, high temp
   elif model=='A':
     Vinit=0.1*(rho-kappa)  

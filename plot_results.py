@@ -5,8 +5,9 @@ import  matplotlib.pyplot as plt
 from load_results import *
 from decimal import Decimal
 
-#for i,m in enumerate(matrixKappa):
-#	print Decimal(m)
+if printKappa==True:
+	for i,m in enumerate(matrixKappa):
+		print i,Decimal(m)
 
 f1=plt.figure()
 f2=plt.figure()
@@ -31,8 +32,8 @@ for i in range(Ndicho):
 	ti=matrixT[i]  
   	if ti[-1]<tmin:
     		tmin=ti[-1]
-	ax1.plot(ti,matrixEtaZ[i], label="kappa="+str(matrixKappa[i]),marker='o')
-	ax2.plot(ti,matrixEtaX[i], label="kappa="+str(matrixKappa[i]),marker='o')
+	ax1.plot(ti,matrixEtaZ[i], label=str(i),marker='o')
+	ax2.plot(ti,matrixEtaX[i], label=str(i),marker='o')
 
 for j in range(len(matrixy[indexPlotV])):
 	if (j%5)==0:
@@ -40,10 +41,6 @@ for j in range(len(matrixy[indexPlotV])):
 		if model=='A':
     			ax4.plot(rho,matrixy[indexPlotV][j][Nrho:2*Nrho],label="time="+str(j),marker='o')
     			ax5.plot(rho,matrixy[indexPlotV][j][2*Nrho:3*Nrho],label="time="+str(j),marker='o')
-
-
-
-
 
 
 ax1.set_title('Eta Z')
@@ -68,7 +65,7 @@ if afficheNu==True:
 		dti=gradient(ti)
 		for k in range(len(matrixy[istep])):
 			Vj.append(matrixy[istep][k][indexVj].real)
-		dlndVj=gradient(log(abs(gradient(Vj)/dti+10**(-30))))/dti
+		dlndVj=gradient(log(abs(gradient(Vj,dti)+10**(-30))),dti)
 		
 		ax6.plot(ti,-1./dlndVj,marker='o')
 	
