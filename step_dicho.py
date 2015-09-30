@@ -10,7 +10,7 @@ def step_dicho(yinit):
 	dty=zeros((size(y)))
 	etaZ=0.01
 	etaX=0.01
-	h=T/NT
+	h=dt0
 
 	stepCount=0
 	t=0.	
@@ -33,7 +33,7 @@ def step_dicho(yinit):
 	  		phase=0
 		  	break
 
-		if(stepCount%(5)==0):
+		if(stepCount%(1)==0):
 			if min(yp)<0:
 	    			print "y is not monotonous at t=",t
 			etaZPlot.append(etaZ)
@@ -46,5 +46,10 @@ def step_dicho(yinit):
 #		if max(abs(np.array(VZXerror)))>0.:
 #			print "V,Z or X is not real.... MAIS LOL QUOI !! VZXerror=",VZXerror
 		  
-	
+	if t<T:
+		print 'time is over, phase is arbitrarily set to 0'
+		phase=0
+
 	return phase,etaZPlot,etaXPlot,yplot,tPlot
+	
+

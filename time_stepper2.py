@@ -16,7 +16,9 @@ def stepper(htry,y,dty,etaZ,etaX):
 	
 	h = htry # Set stepsize to the initial trial value
 	control = ControlError853(h)
-	
+
+	varBreak=False	
+
 	while 1==1:
 		y_new,yerr,yerr2 = computeFlow853(y,dty,etaZ,etaX,h) #Take a step.
 		err = computeError853(yerr,yerr2,y,y_new,h)
@@ -28,6 +30,7 @@ def stepper(htry,y,dty,etaZ,etaX):
 		#Step rejected. Try again with reduced h set by controller
 		if (abs(h) <= 10**(-5)):
 			print "stepsize underflow in StepperDopr853, break with h=",h
+			varBreak=True
 			break
 	
 	dty_new,etaZ_new,etaX_new,yerror = eqFlow(y_new,etaZ,etaX,1)
@@ -35,7 +38,10 @@ def stepper(htry,y,dty,etaZ,etaX):
 	y = y_new
 	hnext = control.hnext
 
-	return hnext,h,y_new,dty_new,etaZ_new,etaX_new 
+	if varBreak:
+		return -1e-5,h,y_new,dty_new,etaZ_new,etaX_new 
+	else:
+		return hnext,h,y_new,dty_new,etaZ_new,etaX_new 
 
 
 

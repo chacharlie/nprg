@@ -51,6 +51,8 @@ ax2.set_title('Eta X')
 #ax2.set_ylim([0, 0.2])
 ax2.set_xlim([0,tmin])
 
+ax3.set_title(filePath)
+
 ax1.legend(loc=4)
 ax2.legend(loc=4)
 ax3.legend(loc=4)
@@ -62,6 +64,8 @@ if afficheNu==True:
 	for istep in range(Ndicho):
 		Vj=[]
 	  	ti=matrixT[istep]
+		if len(ti)<2:
+			break
 		dti=gradient(ti)
 		for k in range(len(matrixy[istep])):
 			Vj.append(matrixy[istep][k][indexVj].real)

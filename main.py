@@ -8,7 +8,7 @@ from global_variables import *
 from step_dicho import *
 from weigth_dicho import *
 
-Ndicho=10
+Ndicho=30
 propDicho=0.4
 
 kmin=0.2
@@ -17,7 +17,7 @@ kappa=(kmin+kmax)/2.
 
 folderPath='results/N'+str(int(NN))+'d'+str(int(dim))+'alpha'+str(int(alpha))+'Nrho'+str(Nrho)+'NQ'+str(NQ)+'/'
 fileName=folderPath+model+'-'+str(approx)+'-'+str(Ndicho)+'-'+str(atol)+'-'+str(rtol)+'-'+str(Nomeg)+'-'+str(Lomeg)\
-	+'-'+str(beta)+'-'+str(kappa)+'-'+str(choixRegu)+'-'+str(propDicho)+'-moinsomega-stepper2-diff-'+str(diffOrder)+'-'+str(edgeOrder)
+	+'-'+str(beta)+'-'+str(kappa)+'-'+str(choixRegu)+'-'+str(propDicho)+'-moinsomega-stepper2-diff-'+str(diffOrder)+'-'+str(edgeOrder)+'-Tmax'+str(T)
 	
 etaZResults=[]
 etaXResults=[]

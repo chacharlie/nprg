@@ -4,7 +4,7 @@ from numpy import polynomial as poly
 
 #modele
 model='A'
-approx=3	#1: LPA', 2: Z complet, 3: X complet, 4: X,Z complets
+approx=4	#1: LPA', 2: Z complet, 3: X complet, 4: X,Z complets
 
 
 # physique
@@ -17,12 +17,12 @@ Nomeg = 200	# nombre de pas pour les frequences
 Nrho= 30		# nombre de pas pour le potentiel
 
 # Ordre des derivees en rho, et ordre des derivees au bord...
-diffOrder = 3
+diffOrder = 5 
 edgeOrder = 5 
 
 #Runge-Kutta adaptatif
-NT = 40000		# nombre de pas de temps initial
-T = -30.		# taille maximale du domaine selon le temps de RG
+dt0 = -1e-4		# nombre de pas de temps initial
+T = -30		# taille maximale du domaine selon le temps de RG
 atol = 1.e-6	# tolerance absolue sur l'erreur dans le Runge-Kutta
 rtol = 0*1.e-6  	# tolerance relative
 
@@ -36,7 +36,7 @@ drho = Lrho/Nrho	# pas de potentiel
 # parametres du regulateur
 choixRegu=1		# 1 : regulateur "mou", 2 : regulateur plus violent...
 alpha = 2.		# parametre du regulateur en impulsions
-beta = 0.5		# parametre du regulateur en frequences
+beta = 1.		# parametre du regulateur en frequences
 
 # variables globales
 rho = linspace(0,Lrho,Nrho)
