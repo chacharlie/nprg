@@ -32,6 +32,10 @@ def step_dicho(yinit):
 	  	if y[0]<-0.7:
 	  		phase=0
 		  	break
+		if etaZ<1e-10:
+			phase=0
+			print 'break because etaZ is zero'
+			break
 
 		if(stepCount%(1)==0):
 			if min(yp)<0:

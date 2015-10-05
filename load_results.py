@@ -23,11 +23,12 @@ rho = linspace(0,Lrho,Nrho)
 atol = 1e-6	# tolerance absolue sur l'erreur dans le Runge-Kutta
 rtol = 0*.1e-6  	# tolerance relative
 
-Ndicho=1
+Ndicho=55
 propDicho=0.4
 
-beta=0.05
-kappa=3.1	
+beta=0.
+kappa=3.1
+#kappa=2.14251937166
 
 model='A'
 approx=3
@@ -36,33 +37,36 @@ choixRegu=1
 edgeOrder5=True
 diffOrder=5
 edgeOrder=5
-T=-0.5
+T=-30
 
 afficheNu=True
+afficheEta=True
+afficheVZX=False
+
 printKappa=False
 indexPlotV=Ndicho-1
 
 
 #folderPath='results/N1d3alpha2NT40000Nrho30NQ50/'
-folderPath='results/N1d3alpha2Nrho30NQ50/'
+folderPath='results/N1d3alpha2Nrho'+str(Nrho)+'NQ'+str(NQ)+'/'
 
 filePath=model+'-'+str(approx)+'-'+str(Ndicho)+'-'+str(atol)+'-'+str(rtol)+'-'+str(Nomeg)+'-'+str(Lomeg)\
-	+'-'+str(beta)+'-'+str(kappa)+'-'+str(choixRegu)+'-'+str(propDicho)+'-moinsomega-stepper2-diff-'+str(diffOrder)+'-'+str(edgeOrder)+'-TEST'+str(T)
+	+'-'+str(beta)+'-'+str(kappa)+'-'+str(choixRegu)+'-'+str(propDicho)+'-moinsomega-stepper2-diff-'+str(diffOrder)+'-'+str(edgeOrder)+'-Tmax'+str(T)
 
-#fileName=folderPath+model+'-'+str(approx)+'-'+str(Ndicho)+'-'+str(atol)+'-'+str(rtol)+'-'+str(Nomeg)+'-'+str(Lomeg)\
+#filePath=model+'-'+str(approx)+'-'+str(Ndicho)+'-'+str(atol)+'-'+str(rtol)+'-'+str(Nomeg)+'-'+str(Lomeg)\
 #	+'-'+str(beta)+'-'+str(kappa)+'-'+str(choixRegu)+'-'+str(propDicho)+'-moinsomega-stepper2-edge5-'+str(edgeOrder5)
 
-#fileName=folderPath+model+'-'+str(approx)+'-'+str(Ndicho)+'-'+str(atol)+'-'+str(rtol)+'-'+str(Nomeg)+'-'+str(Lomeg)\
+#filePath=model+'-'+str(approx)+'-'+str(Ndicho)+'-'+str(atol)+'-'+str(rtol)+'-'+str(Nomeg)+'-'+str(Lomeg)\
 #	+'-'+str(beta)+'-'+str(kappa)+'-'+str(choixRegu)+'-'+str(propDicho)+'-moinsomega'
 
-#fileName=folderPath+model+'-'+str(Ndicho)+'-'+str(atol)+'-'+str(rtol)+'-'+str(Nomeg)+'-'+str(Lomeg)\
+#filePath=model+'-'+str(Ndicho)+'-'+str(atol)+'-'+str(rtol)+'-'+str(Nomeg)+'-'+str(Lomeg)\
 #	+'-'+str(beta)+'-'+str(kappa)+'-'+str(choixRegu)+'-'+str(propDicho)+'-moinsomega'
 
 
-#fileName=folderPath+'Veta-'+str(Ndicho)+'-'+str(atol)+'-'+str(rtol)+'-'+str(Nomeg)+'-'+str(Lomeg)+\
+#filePath='Veta-'+str(Ndicho)+'-'+str(atol)+'-'+str(rtol)+'-'+str(Nomeg)+'-'+str(Lomeg)+\
 #	'-'+str(beta)+'-'+str(kappa)+'-'+str(choixRegu)+'-'+str(propDicho)+'-moinsomega'
 
-#fileName=folderPath+'Veta-'+str(Ndicho)+'-'+str(Nomeg)+'-'+str(Lomeg)+'-'+str(beta)+'-'+str(kappa)+'-'+str(choixRegu)+'-moinsomega-flotXZcomplets'
+#filePath='Veta-'+str(Ndicho)+'-'+str(Nomeg)+'-'+str(Lomeg)+'-'+str(beta)+'-'+str(kappa)+'-'+str(choixRegu)+'-moinsomega-flotXZcomplets'
 
 fileName = folderPath + filePath
 
@@ -73,3 +77,4 @@ matrixy=data['yResults']
 #matrixy=data['Vresults']
 matrixKappa=data['kappaResults']
 matrixT=data['tResults']
+

@@ -8,11 +8,11 @@ from global_variables import *
 from step_dicho import *
 from weigth_dicho import *
 
-Ndicho=30
+Ndicho=1
 propDicho=0.4
 
-kmin=0.2
-kmax=6.
+kmin=0.925
+kmax=0.925
 kappa=(kmin+kmax)/2.
 
 folderPath='results/N'+str(int(NN))+'d'+str(int(dim))+'alpha'+str(int(alpha))+'Nrho'+str(Nrho)+'NQ'+str(NQ)+'/'

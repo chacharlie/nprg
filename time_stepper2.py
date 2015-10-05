@@ -29,8 +29,8 @@ def stepper(htry,y,dty,etaZ,etaX):
 	
 		#Step rejected. Try again with reduced h set by controller
 		if (abs(h) <= 10**(-5)):
-			print "stepsize underflow in StepperDopr853, break with h=",h
-			varBreak=True
+			print "stepsize underflow in StepperDopr853, h=",h
+		#	varBreak=True
 			break
 	
 	dty_new,etaZ_new,etaX_new,yerror = eqFlow(y_new,etaZ,etaX,1)
