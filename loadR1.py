@@ -2,7 +2,7 @@ from pylab import *
 from numpy import *
 from scipy import interpolate
 
-from global_variables import beta,omegcol,Nomeg,NQ
+from global_variables import beta,omegcol,Nomeg,NQ,omegaRangeDico
 
 
 ############# Importing R1 (from data created using Mathematica)
@@ -17,7 +17,6 @@ elif sbeta=='5.0':
 elif sbeta=='10.0':
 	sbeta='10'
 	extension='.dat'
-omegaRangeDico={'0.01': 500,'0.05':200,'0.1':100,'0.5':20,'1':20,'5':20,10:'10'}
 omegRange=omegaRangeDico[sbeta]
 
 folderPath='data/'
@@ -50,7 +49,7 @@ for i in range(sizeIm):
 iR1re = interpolate.splrep(omegaRe,R1re,s=0)
 iR1im = interpolate.splrep(omegaIm,R1im,s=0)
 
-omega = -omegcol.real # ATTE?TION : pour plusomega, signe -
+omega = omegcol.real # ATTE?TION : pour plusomega, signe -
 
 R1col = interpolate.splev(omega,iR1re,der=0) + 1j*interpolate.splev(omega,iR1im,der=0)
 domegR1col = interpolate.splev(omega,iR1re,der=1) + 1j*interpolate.splev(omega,iR1im,der=1)
