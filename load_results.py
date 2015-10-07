@@ -12,7 +12,7 @@ Nrho= 30                # nombre de pas pour le potentiel
 
 # geometrique
 LQ = 4.2                # taille du domaine selon q
-Lomeg = 50.              # taille du domaine selon omega
+Lomeg = 20              # taille du domaine selon omega
 Lrho = 0.0984*NN/(2**(-1-dim)*pi**((-dim/2))/math.gamma(dim/2)) # taille du domaine selon rho
 drho = Lrho/Nrho        # pas de potentiel
 
@@ -23,25 +23,25 @@ rho = linspace(0,Lrho,Nrho)
 atol = 1e-6	# tolerance absolue sur l'erreur dans le Runge-Kutta
 rtol = 0*.1e-6  	# tolerance relative
 
-Ndicho=55
+Ndicho=10
 propDicho=0.4
 
-beta=0.
+beta=0.5
 kappa=3.1
 #kappa=2.14251937166
 
 model='A'
 approx=3
-choixRegu=1
+choixRegu=2
 
 edgeOrder5=True
 diffOrder=5
 edgeOrder=5
-T=-30
+T=-30.
 
-afficheNu=True
+afficheNu=False
 afficheEta=True
-afficheVZX=False
+afficheVZX=True
 
 printKappa=False
 indexPlotV=Ndicho-1

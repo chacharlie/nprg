@@ -32,9 +32,14 @@ def step_dicho(yinit):
 	  	if y[0]<-0.7:
 	  		phase=0
 		  	break
-		if etaZ<1e-10 or etaX<1e-10:
+		if etaZ<0.:
 			phase=1
-			print 'break because etaZ or etaX is zero, phase set to 1 (high T)'
+			print 'break because etaZ is negative (etaZ=,'+str(etaZ)+') phase set to 1 (high T)'
+			break
+
+		if etaX<0.:
+			phase=1
+			print 'break because etaX is negative (etaX=,'+str(etaZ)+') phase set to 1 (high T)'
 			break
 
 		if(stepCount%(1)==0):
