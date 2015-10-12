@@ -8,7 +8,7 @@ from global_variables import *
 from step_dicho import *
 from weigth_dicho import *
 
-Ndicho=1
+Ndicho=50
 propDicho=0.4
 
 kmin=3.5

@@ -74,8 +74,8 @@ def eqFlow(VZX,etaZ,etaX,computeEta):
 #	VZXerror = [max(abs(Verror))]+[max(abs(Xerror))]+[max(abs(Zerror))]
 
 	if computeEta==1:	
-		dtZ0,dtX0 = findZX0(V,Vp,Zp,Xp,dtV,dtZ,dtX)
-		return dtVZX.flatten(),etaZ-dtZ0,etaX-dtX0 #,np.array(VZXerror)
+		dtZ0,dtX0,rho0 = findZX0(V,Vp,Zp,Xp,dtV,dtZ,dtX)
+		return dtVZX.flatten(),etaZ-dtZ0,etaX-dtX0,rho0 #,np.array(VZXerror)
 	else:
 		return dtVZX.flatten()
 
@@ -148,6 +148,6 @@ def findZX0(V,Vp,Zp,Xp,dtV,dtZ,dtX):
 		ZpInterp=interp1d(rho,Zp)
 		XpInterp=interp1d(rho,Xp)
 		dtRho0 = - dtVinterp(rho0)/VpInterp(rho0)
-		return dtZinterp(rho0)+ZpInterp(rho0)*dtRho0,dtXinterp(rho0)+XpInterp(rho0)*dtRho0
+		return dtZinterp(rho0)+ZpInterp(rho0)*dtRho0,dtXinterp(rho0)+XpInterp(rho0)*dtRho0,rho0
 	else:
-		return dtZ[0]-Zp[0]*dtV[0]/Vp[0],dtX[0]-Xp[0]*dtV[0]/Vp[0]
+		return dtZ[0]-Zp[0]*dtV[0]/Vp[0],dtX[0]-Xp[0]*dtV[0]/Vp[0],0.

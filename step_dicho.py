@@ -20,7 +20,7 @@ def step_dicho(yinit):
 	tPlot=[]
 
 	while t>T: # (RG-time is negative)
-		h,hdid,y,dty,etaZ,etaX = stepper(h,y,dty)
+		h,hdid,y,dty,etaZ,etaX,rho0 = stepper(h,y,dty)
 		t += hdid
 		if model=='ON':
 			yp=d_rho(y)
@@ -42,7 +42,16 @@ def step_dicho(yinit):
 			print 'break because etaX is negative (etaX='+str(etaZ)+') phase set to 1 (high T)'
 			break
 
-		if(stepCount%(1)==0):
+		if rho0==0.:
+			print 'RHOOOOOOO=',rho0
+	    		if y[0]>0.:
+	    			phase=1
+	    			break
+	  		if y[0]<-0.7:
+	  			phase=0
+			  	break
+
+		if(stepCount%(5)==0):
 			if min(yp)<0:
 	    			print "y is not monotonous at t=",t
 			etaZPlot.append(etaZ)

@@ -17,7 +17,7 @@ def stepper(htry,y,dty):
 	h = htry # Set stepsize to the initial trial value
 	control = ControlError853(h)
 
-	etaZ,etaX = computeEta(y)
+	etaZ,etaX,rho0 = computeEta(y)
 
 	while 1==1:
 		y_new,yerr,yerr2 = computeFlow853(y,dty,etaZ,etaX,h) #Take a step.
@@ -36,14 +36,14 @@ def stepper(htry,y,dty):
 	y = y_new
 	hnext = control.hnext
 
-	return hnext,h,y_new,dty_new,etaZ,etaX 
+	return hnext,h,y_new,dty_new,etaZ,etaX,rho0 
 
 
 def computeEta(y):
 	# etaZ_new = A + B*etaZ + C*etaX
-	_,A,Ap = eqFlow(y,0.,0.,1)
-	_,etaZ10,etaX10 = eqFlow(y,1.,0.,1)
-	_,etaZ01,etaX01 = eqFlow(y,0.,1.,1)
+	_,A,Ap,rho0 = eqFlow(y,0.,0.,1)
+	_,etaZ10,etaX10,_ = eqFlow(y,1.,0.,1)
+	_,etaZ01,etaX01,_ = eqFlow(y,0.,1.,1)
 
 	B,Bp = etaZ10-A, etaX10-Ap
 	C,Cp = etaZ01-A, etaX01-Ap
@@ -51,7 +51,7 @@ def computeEta(y):
 	etaZ = (A*(1.-Cp)+C*A)/((1.-B)*(1.-Cp)-C*Bp)
 	etaX = (Ap+Bp*etaZ)/(1.-Cp)
 
-	return etaZ, etaX
+	return etaZ, etaX,rho0
 
 def computeFlow853(y,dty,etaZ,etaX,h):
 	ytemp=y+h*a21*dty
