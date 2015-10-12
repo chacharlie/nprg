@@ -23,7 +23,7 @@ rho = linspace(0,Lrho,Nrho)
 atol = 1e-6	# tolerance absolue sur l'erreur dans le Runge-Kutta
 rtol = 0*.1e-6  	# tolerance relative
 
-Ndicho=10
+Ndicho=30
 propDicho=0.4
 
 beta=0.5
@@ -31,7 +31,7 @@ kappa=3.1
 #kappa=2.14251937166
 
 model='A'
-approx=3
+approx=4
 choixRegu=2
 
 edgeOrder5=True
@@ -39,7 +39,7 @@ diffOrder=5
 edgeOrder=5
 T=-30.
 
-afficheNu=False
+afficheNu=True
 afficheEta=True
 afficheVZX=True
 

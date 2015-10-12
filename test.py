@@ -18,9 +18,9 @@ def stepper(htry,y,dty):
 	control = ControlError853(h)
 
 	etaZ,etaX = computeEta(y)
-
+	
 	while 1==1:
-		y_new,yerr,yerr2 = computeFlow853(y,dty,etaZ,etaX,h) #Take a step.
+		y_new,yerr,yerr2,varRho0 = computeFlow853(y,dty,etaZ,etaX,h) #Take a step.
 		err = computeError853(yerr,yerr2,y,y_new,h)
 		varSuccess = control.success(err)
 		h = control.h
@@ -30,14 +30,14 @@ def stepper(htry,y,dty):
 		#Step rejected. Try again with reduced h set by controller
 		if (abs(h) <= 10**(-5)):
 			print "stepsize underflow in StepperDopr853, h=",h
+		#	break
 	
 	dty_new = eqFlow(y_new,etaZ,etaX,0)
 	dty = dty_new
 	y = y_new
 	hnext = control.hnext
 
-	return hnext,h,y_new,dty_new,etaZ,etaX 
-
+	return hnext,h,y_new,dty_new,etaZ,etaX,varRho0 
 
 def computeEta(y):
 	# etaZ_new = A + B*etaZ + C*etaX
@@ -93,7 +93,15 @@ def computeFlow853(y,dty,etaZ,etaX,h):
 	yerr=k4-bhh1*dty-bhh2*k9-bhh3*k3
 	yerr2=er1*dty+er6*k6+er7*k7+er8*k8+er9*k9+er10*k10+er11*k2+er12*k3
 
-	return y_new,yerr,yerr2
+	rho0 = eqFlow(y_new,etaZ,etaX,2)
+	index= argmin(abs(rho-rho0))
+	y_new[Nrho+index]=1.
+	y_new[2*Nrho+index]=1.
+	if rho0==0.:
+		return y_new,yerr,yerr2,0
+	else:
+		return y_new,yerr,yerr2,1
+
 
 
 def computeError853(yerr,yerr2,y,y_new,h):

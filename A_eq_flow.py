@@ -71,11 +71,11 @@ def eqFlow(VZX,etaZ,etaX,computeEta):
 	
 	dtVZX = np.array([dtV,dtZ,dtX])
 
-	VZXerror = [max(abs(Verror))]+[max(abs(Xerror))]+[max(abs(Zerror))]
+#	VZXerror = [max(abs(Verror))]+[max(abs(Xerror))]+[max(abs(Zerror))]
 
 	if computeEta==1:	
 		dtZ0,dtX0 = findZX0(V,Vp,Zp,Xp,dtV,dtZ,dtX)
-		return dtVZX.flatten(),etaZ-dtZ0,etaX-dtX0,np.array(VZXerror)
+		return dtVZX.flatten(),etaZ-dtZ0,etaX-dtX0 #,np.array(VZXerror)
 	else:
 		return dtVZX.flatten()
 

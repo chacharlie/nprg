@@ -2,27 +2,25 @@ from pylab import *
 from numpy import *
 from scipy import interpolate
 
-from global_variables import beta,omegcol,Nomeg,NQ,omegaRangeDico
+from global_variables import beta,omegcol,Nomeg,NQ,Lomeg
 
 
 ############# Importing R1 (from data created using Mathematica)
-sbeta=str(beta)
-extension='..dat'
-if sbeta=='1.0':
-	sbeta='1'
-	extension='.dat'
-elif sbeta=='5.0':
-	sbeta='5'
-	extension='.dat'
-elif sbeta=='10.0':
-	sbeta='10'
-	extension='.dat'
-omegRange=omegaRangeDico[sbeta]
+#if sbeta=='1.0':
+#	sbeta='1'
+#	extension='.dat'
+#elif sbeta=='5.0':
+#	sbeta='5'
+#	extension='.dat'
+#elif sbeta=='10.0':
+#	sbeta='10'
+#	extension='.dat'
 
 folderPath='data/'
+extension='.dat'
 
-R1reFile=folderPath+'R1FTre_beta-'+sbeta+'_omegRange-'+str(omegRange)+extension
-R1imFile=folderPath+'R1FTim_beta-'+sbeta+'_omegRange-'+str(omegRange)+extension
+R1reFile=folderPath+'R1FTre_beta-'+str(beta)+'_omegRange-'+str(Lomeg)+extension
+R1imFile=folderPath+'R1FTim_beta-'+str(beta)+'_omegRange-'+str(Lomeg)+extension
 
 
 dataRe = loadtxt(R1reFile)

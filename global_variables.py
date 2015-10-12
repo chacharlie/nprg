@@ -3,16 +3,16 @@ import numpy as np
 from numpy import polynomial as poly
 
 #Pour importer R1 si choixRegu==2
-omegaRangeDico={'0.01': 500,'0.05':200,'0.1':100,'0.5':20,'1':20,'5':20,10:'10'}
+omegaRangeDico={'0.01': 500.,'0.05':200.,'0.1':100.,'0.25':40.,'0.5':20.,'0.75':13.3333,'1.0':10,'5.0':20,'10.0':10}
 
 # parametres du regulateur
 choixRegu=2		# 1 : regulateur "mou", 2 : regulateur plus violent...
 alpha = 2.		# parametre du regulateur en impulsions
-beta = 0.1		# parametre du regulateur en frequences
+beta = 0.5		# parametre du regulateur en frequences
 
 #modele
 model='A'
-approx=3	#1: LPA', 2: Z complet, 3: X complet, 4: X,Z complets
+approx=4	#1: LPA', 2: Z complet, 3: X complet, 4: X,Z complets
 
 # physique
 dim=3.			# dimension d'espace
@@ -30,14 +30,14 @@ edgeOrder = 5
 #Runge-Kutta adaptatif
 dt0 = -1e-4		# nombre de pas de temps initial
 T = -30.		# taille maximale du domaine selon le temps de RG
-atol = 1.e-6	# tolerance absolue sur l'erreur dans le Runge-Kutta
+atol = 1.e-7	# tolerance absolue sur l'erreur dans le Runge-Kutta
 rtol = 0*1.e-6  	# tolerance relative
 
 
 # geometrique
 LQ = 4.2		# taille du domaine selon q
 if choixRegu==1:
-	Lomeg = 75.		# taille du domaine selon omega
+	Lomeg = 50.		# taille du domaine selon omega
 elif choixRegu==2:
 	Lomeg=omegaRangeDico[str(beta)]
 Lrho = 0.0984*NN/(2**(-1-dim)*pi**((-dim/2))/math.gamma(dim/2))	# taille du domaine selon rho
