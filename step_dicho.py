@@ -46,10 +46,27 @@ def step_dicho(yinit):
 			print 'RHOOOOOOO=',rho0
 	    		if y[0]>0.:
 	    			phase=1
-	    			break
-	  		if y[0]<-0.7:
+	  		else:
 	  			phase=0
-			  	break
+		  	break
+
+		maxZ=max(y[Nrho:2*Nrho])
+		maxX=max(y[2*Nrho:3*Nrho])
+		if maxZ<1.:
+			print 'Zmax=',maxZ
+	    		if y[0]>0.:
+	    			phase=1
+	  		else:
+	  			phase=0
+		  	break
+		
+		if maxX<1.:
+			print 'Xmax=',maxX
+	    		if y[0]>0.:
+	    			phase=1
+	  		else:
+	  			phase=0
+		  	break
 
 		if(stepCount%(5)==0):
 			if min(yp)<0:
