@@ -5,9 +5,12 @@ import  matplotlib.pyplot as plt
 from load_results import *
 from decimal import Decimal
 
-if printKappa==True:
+NdichoPlot = matrixKappa.shape[0]
+indexPlotV = NdichoPlot-1
+
+if printKappa:
 	for i,m in enumerate(matrixKappa):
-		print i,Decimal(m)
+		print i,Decimal(m[0]),Decimal(m[1])
 
 if model=='A':
 	f4=plt.figure()
@@ -18,14 +21,14 @@ if model=='A':
 	ax5.set_title('X')
 
 
-if afficheEta==True:
+if afficheEta:
 	f1=plt.figure()
 	f2=plt.figure()
 	ax1= f1.add_subplot(111)
 	ax2 = f2.add_subplot(111)
 	
 	tmin=0.
-	for i in range(Ndicho):
+	for i in range(NdichoPlot):
 		ti=matrixT[i]  
 	  	if ti[-1]<tmin:
 	    		tmin=ti[-1]
@@ -42,7 +45,7 @@ if afficheEta==True:
 	ax1.legend(loc='best')
 	ax2.legend(loc='best')
 
-if afficheVZX==True:
+if afficheVZX:
 	f3=plt.figure()
 	ax3 = f3.add_subplot(111)
 	ax3.set_title(filePath)
@@ -57,11 +60,11 @@ if afficheVZX==True:
 	ax3.legend(loc='best')
 
 
-if afficheNu==True:
+if afficheNu:
 	f6=plt.figure()
 	ax6=f6.add_subplot(111)
 	indexVj=0
-	for istep in range(Ndicho):
+	for istep in range(NdichoPlot):
 		Vj=[]
 	  	ti=matrixT[istep]
 		if len(ti)<2:
@@ -82,7 +85,7 @@ if afficheNu==True:
 #	ax6=f6.add_subplot(111)
 #
 #	indexVj=0
-#	for istep in range(Ndicho):
+#	for istep in range(NdichoPlot):
 #		Vj=[]
 #	  	NTi=len(matrixEtaZ[istep])  
 #	  	ti=linspace(0,100*dt*NTi,NTi)

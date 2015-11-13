@@ -6,9 +6,9 @@ from numpy import polynomial as poly
 omegaRangeDico={'0.01': 500.,'0.05':200.,'0.1':100.,'0.25':40.,'0.5':20.,'0.75':13.3333,'1.0':10,'5.0':20,'10.0':10}
 
 # parametres du regulateur
-choixRegu=2		# 1 : regulateur "mou", 2 : regulateur plus violent...
-alpha = 2.		# parametre du regulateur en impulsions
-beta = 1.		# parametre du regulateur en frequences
+choixRegu=1		# 1 : regulateur "mou", 2 : regulateur plus violent...
+alpha = 2.3		# parametre du regulateur en impulsions
+beta = 0.75		# parametre du regulateur en frequences
 
 #modele
 model='A'
@@ -27,12 +27,18 @@ Nrho= 30	# nombre de pas pour le potentiel
 diffOrder = 5 
 edgeOrder = 5 
 
-#Runge-Kutta adaptatif
-dt0 = -1e-4		# nombre de pas de temps initial
 T = -30.		# taille maximale du domaine selon le temps de RG
-atol = 1.e-7	# tolerance absolue sur l'erreur dans le Runge-Kutta
-rtol = 0*1.e-6  	# tolerance relative
 
+RKadaptatif=True
+if RKadaptatif:
+	#Runge-Kutta adaptatif
+	dt0 = -1e-4		# nombre de pas de temps initial
+	atol = 1.e-6	# tolerance absolue sur l'erreur dans le Runge-Kutta
+	rtol = 0*1.e-6  	# tolerance relative
+else:
+	#pas adaptatif
+	NT = 40000
+	dt = T/NT
 
 # geometrique
 LQ = 4.2		# taille du domaine selon q

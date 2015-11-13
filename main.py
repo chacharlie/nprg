@@ -9,16 +9,20 @@ from step_dicho import *
 from weigth_dicho import *
 
 Ndicho=50
-propDicho=0.4
+propDicho=0.5
 
-kmin=3.5
-kmax=5.
+kmin=3.
+kmax=6.
 kappa=(kmin+kmax)/2.
 
-folderPath='results/N'+str(int(NN))+'d'+str(int(dim))+'alpha'+str(int(alpha))+'Nrho'+str(Nrho)+'NQ'+str(NQ)+'/'
-fileName=folderPath+model+'-'+str(approx)+'-'+str(Ndicho)+'-'+str(atol)+'-'+str(rtol)+'-'+str(Nomeg)+'-'+str(Lomeg)\
-	+'-'+str(beta)+'-'+str(kappa)+'-'+str(choixRegu)+'-'+str(propDicho)+'-moinsomega-stepper2-diff-'+str(diffOrder)+'-'+str(edgeOrder)+'-Tmax'+str(T)+'testPlusDeBreak'
-	
+folderPath='results/N'+str(int(NN))+'d'+str(int(dim))+'Nrho'+str(Nrho)+'NQ'+str(NQ)+'/'
+if RKadaptatif:
+	fileName=folderPath+model+'-'+str(approx)+'-'+str(Ndicho)+'-'+str(atol)+'-'+str(rtol)+'-'+str(Nomeg)+'-'+str(Lomeg)\
+	+'-'+str(beta)+'-'+str(alpha)+'-'+str(kappa)+'-'+str(choixRegu)+'-'+str(propDicho)+'-moinsomega-kminmax-'+str(diffOrder)+'-'+str(edgeOrder)+'-Tmax'+str(T)
+else:	
+	fileName=folderPath+model+'-'+str(approx)+'-'+str(Ndicho)+'-'+str(NT)+'-'+str(Nomeg)+'-'+str(Lomeg)\
+	+'-'+str(beta)+'-'+str(alpha)+'-'+str(kappa)+'-'+str(choixRegu)+'-'+str(propDicho)+'-moinsomega-kminmax-'+str(diffOrder)+'-'+str(edgeOrder)+'-Tmax'+str(T)+'testssRKadaptatif'
+
 etaZResults=[]
 etaXResults=[]
 yResults=[]
@@ -64,14 +68,15 @@ for i in range(Ndicho):
   etaZResults.append(np.array(etaZPlot))
   etaXResults.append(np.array(etaXPlot))
   yResults.append(np.array(yPlot))
-  kappaResults.append(kappa)
+  kappaResults.append([kmin,kmax])
   tResults.append(tPlot)
 
+#  etaZResults=np.array(etaZResults)
+#  etaXResults=np.array(etaXResults)
+#  yResults=np.array(yResults)
+#  kappaResults=np.array(kappaResults)
+#  tResults=np.array(tResults)
+	# On sauvegarde (en ecrasant le resultat precedent, ie les iterations precedentes, a chaque pas de temps)
+  np.savez(fileName,etaZResults=etaZResults,etaXResults=etaXResults,yResults=yResults,kappaResults=kappaResults,tResults=tResults)
 
-etaZResults=np.array(etaZResults)
-etaXResults=np.array(etaXResults)
-yResults=np.array(yResults)
-kappaResults=np.array(kappaResults)
-tResults=np.array(tResults)
-np.savez(fileName,etaZResults=etaZResults,etaXResults=etaXResults,yResults=yResults,kappaResults=kappaResults,tResults=tResults)
 print "SIMU ",fileName," IS TERMINAOUCH after ",time()-tsimu,"seconds"
