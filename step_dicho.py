@@ -39,9 +39,12 @@ def step_dicho(yinit):
 	    	if y[0]>0.:
 	    		phase=1
 	    		break
-	  	if y[0]<-0.7:
+	  	if y[0]<-0.7 and NN==1:
 	  		phase=0
 		  	break
+		if y[0]<-1. and NN>1:
+			phase=0
+			break
 		if etaZ<0.:
 			phase=1
 			print 'break because etaZ is negative (etaZ='+str(etaZ)+') phase set to 1 (high T)'
@@ -60,23 +63,24 @@ def step_dicho(yinit):
 	  			phase=0
 		  	break
 
-		maxZ=max(y[Nrho:2*Nrho])
-		maxX=max(y[2*Nrho:3*Nrho])
-		if maxZ<0.95:
-			print 'Zmax=',maxZ
-	    		if y[0]>0.:
-	    			phase=1
-	  		else:
-	  			phase=0
-		  	break
-		
-		if maxX<0.95:
-			print 'Xmax=',maxX
-	    		if y[0]>0.:
-	    			phase=1
-	  		else:
-	  			phase=0
-		  	break
+		if model=='A' and approx=='4':
+			maxZ=max(y[Nrho:2*Nrho])
+			maxX=max(y[2*Nrho:3*Nrho])
+			if maxZ<0.95:
+				print 'Zmax=',maxZ
+		    		if y[0]>0.:
+		    			phase=1
+		  		else:
+		  			phase=0
+			  	break
+			
+			if maxX<0.95:
+				print 'Xmax=',maxX
+		    		if y[0]>0.:
+		    			phase=1
+		  		else:
+		  			phase=0
+			  	break
 
 		if(stepCount%(5)==0):
 			if min(yp)<0:
