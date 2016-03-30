@@ -15,14 +15,14 @@ kmin=1.
 kmax=6.
 kappa=(kmin+kmax)/2.
 
-folderPath='results/N'+str(int(NN))+'d'+str(int(dim))+'Nrho'+str(Nrho)+'NQ'+str(NQ)+'/'
+folderPath='results/March16/N'+str(int(NN))+'d'+str(int(dim))+'Nrho'+str(Nrho)+'NQ'+str(NQ)+'/'
 str1=folderPath+model+'-'+str(approx)+'-'+str(Ndicho)+'-'
 if RKadaptatif:
 	str2=str(atol)+'-'+str(rtol)+'-'
 else:	
-	str2=+str(NT)+'-'
+	str2=str(NT)+'-'
 str3=str(Nomeg)+'-'+str(Lomeg)+'-'+str(beta)+'-'+str(alpha)+'-'+str(kappa)+'-'+str(choixRegu)+'-'\
-	+str(propDicho)+'-moinsomega-kminmax-'+str(diffOrder)+'-'+str(edgeOrder)+'-Tmax'+str(T)
+	+str(propDicho)+'-'+str(diffOrder)+'-'+str(edgeOrder)+'-Tmax'+str(T)
 
 fileName=str1+str2+str3
 

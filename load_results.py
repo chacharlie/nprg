@@ -2,13 +2,13 @@ from pylab import *
 from numpy import *
 
 # physique
-dim=2
+dim=3
 NN=1
 
 # numerique
 NQ = 50         # nombre de pas pour les impulsions
 Nomeg = 200     # nombre de pas pour les frequences
-Nrho= 30                # nombre de pas pour le potentiel
+Nrho= 30        # nombre de pas pour le potentiel
 
 # geometrique
 LQ = 4.2                # taille du domaine selon q
@@ -26,13 +26,14 @@ rtol = 0*.1e-6  	# tolerance relative
 Ndicho=30
 propDicho=0.5
 
-beta=0.
+beta=0.2
 alpha=2.
 kappa=3.5
 #kappa=2.14251937166
 
-RKadaptatif=True
+RKadaptatif=False
 NT=40000
+
 model='A'
 approx=4
 choixRegu=1
@@ -51,10 +52,10 @@ printKappa=True
 
 #folderPath='results/N1d3alpha2NT40000Nrho30NQ50/'
 #folderPath='results/N1d3alpha2Nrho'+str(Nrho)+'NQ'+str(NQ)+'/'
-folderPath='results/N'+str(NN)+'d'+str(dim)+'Nrho'+str(Nrho)+'NQ'+str(NQ)+'/'
+folderPath='results/March16/N'+str(NN)+'d'+str(dim)+'Nrho'+str(Nrho)+'NQ'+str(NQ)+'/'
 
 str1=model+'-'+str(approx)+'-'+str(Ndicho)+'-'
-str3=str(Nomeg)+'-'+str(Lomeg)+'-'+str(beta)+'-'+str(alpha)+'-'+str(kappa)+'-'+str(choixRegu)+'-'+str(propDicho)+'-moinsomega-kminmax-'+str(diffOrder)+'-'+str(edgeOrder)+'-Tmax'+str(T)
+str3=str(Nomeg)+'-'+str(Lomeg)+'-'+str(beta)+'-'+str(alpha)+'-'+str(kappa)+'-'+str(choixRegu)+'-'+str(propDicho)+'-'+str(diffOrder)+'-'+str(edgeOrder)+'-Tmax'+str(T)
 
 if RKadaptatif:
 	str2=str(atol)+'-'+str(rtol)+'-'

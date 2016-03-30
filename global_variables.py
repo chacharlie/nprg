@@ -7,11 +7,11 @@ omegaRangeDico={'0.01': 500.,'0.05':200.,'0.1':200.,'0.25':40.,'0.5':20.,'0.75':
 
 # parametres du regulateur
 choixRegu=1		# 1 : regulateur "mou", 2 : regulateur plus violent...
-alpha = 1.7		# parametre du regulateur en impulsions
-beta = 1.		# parametre du regulateur en frequences
+alpha = 10.	# parametre du regulateur en impulsions
+beta = 0.		# parametre du regulateur en frequences
 
 #modele
-model='ON'
+model='ON'	# 'A' or 'ON'
 approx=4	#1: LPA', 2: Z complet, 3: X complet, 4: X,Z complets
 
 # physique
@@ -29,7 +29,7 @@ edgeOrder = 5
 
 T = -30.		# taille maximale du domaine selon le temps de RG
 
-RKadaptatif=True
+RKadaptatif=False
 if RKadaptatif:
 	#Runge-Kutta adaptatif
 	dt0 = -1e-4		# nombre de pas de temps initial
