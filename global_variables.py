@@ -7,7 +7,7 @@ omegaRangeDico={'0.01': 500.,'0.05':200.,'0.1':200.,'0.25':40.,'0.5':20.,'0.75':
 
 # parametres du regulateur
 choixRegu=1		# 1 : regulateur "mou", 2 : regulateur plus violent...
-alpha = 10.	# parametre du regulateur en impulsions
+alpha = 4.	# parametre du regulateur en impulsions
 beta = 0.		# parametre du regulateur en frequences
 
 #modele

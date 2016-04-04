@@ -2,15 +2,14 @@ from pylab import *
 from numpy import *
 import  matplotlib.pyplot as plt
 
-model=input('Enter model (1 for ON, 2 for A):')
-if model==1:
-	from load_results import *
-elif model==2:
-	from A_load_results import *
+from load_results import *
 
 maxEtaZ=[]
 maxEtaX=[]
-maxNu=[]
+maxNuPos=[]
+maxNuNeg=[]
+
+NdichoPlot = matrixKappa.shape[0]
 
 for i in range(Ndicho):
 	EtaZt=matrixEtaZ[i]
@@ -22,18 +21,44 @@ for i in range(Ndicho):
 	maxEtaX.append(EtaXt[argmin(abs(gradient(EtaXt)))])
 
 
+#indexVj=0
+#matrixV = matrixy#[istep][:][0:Nrho]
+#for istep in range(Ndicho):
+#	Vj=[]
+#  	NTi=len(matrixEtaZ[istep])  
+##  	ti=linspace(0,100*dt*NTi,NTi)
+#	ti=matrixT[istep]
+#	dti=gradient(ti)
+#	for k in range(len(matrixV[istep])):
+#		Vj.append(matrixV[istep][k][indexVj].real)
+#	dlndVj=gradient(log(abs(gradient(Vj)/(100.*dti)+10**(-30))))/(100.*dti)
+#	nu=-1./dlndVj
+#	nu2=nu[where((nu>0.) & (nu<1.))]
+#	maxNu.append(nu2[argmin(abs(gradient(nu2)))])
+#	#plot(nu2,marker='o')
+
 indexVj=0
-for istep in range(Ndicho):
+for istep in range(NdichoPlot):
 	Vj=[]
-  	NTi=len(matrixEtaZ[istep])  
-  	ti=linspace(0,100*dt*NTi,NTi)
-	for k in range(len(matrixV[istep])):
-		Vj.append(matrixV[istep][k][indexVj].real)
-	dlndVj=gradient(log(abs(gradient(Vj)/(100.*dt)+10**(-30))))/(100.*dt)
+  	ti=matrixT[istep]
+	if len(ti)<2:
+		break
+	dti=gradient(ti)
+	for k in range(len(matrixy[istep])):
+		Vj.append(matrixy[istep][k][indexVj].real)
+	dlndVj=gradient(log(abs(gradient(Vj,dti)+10**(-30))),dti)
 	nu=-1./dlndVj
 	nu2=nu[where((nu>0.) & (nu<1.))]
-	maxNu.append(nu2[argmin(abs(gradient(nu2)))])
+	dnu2=gradient(nu2)
+	d2nu2=gradient(dnu2)
+	positionMin = argmin(abs(dnu2))
+	if d2nu2[positionMin]>0.:
+		maxNuPos.append(nu2[positionMin])
+	else:
+		maxNuNeg.append(nu2[positionMin])
+		
 	#plot(nu2,marker='o')
+
 
 
 fig, ax1 = plt.subplots()
@@ -48,7 +73,8 @@ ax1.legend(loc='upper center')
 
 
 
-ax2.plot(maxNu,label=r'$\nu $',marker='x',color='r')
+ax2.plot(maxNuPos,label=r'$\nu $',marker='x',color='r')
+ax2.plot(maxNuNeg,marker='x',color='g')
 # Make the y-axis label and tick labels match the line color.
 ax2.set_ylabel(r'$\nu$', color='r')
 for tl in ax2.get_yticklabels():
@@ -56,5 +82,6 @@ for tl in ax2.get_yticklabels():
 ax2.legend(loc='upper right')
 
 
+print maxEtaZ[-1],maxEtaX[-1],(maxNuPos[-1]+maxNuNeg[-1])/2.
 
 plt.show()

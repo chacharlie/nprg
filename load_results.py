@@ -26,15 +26,15 @@ rtol = 0*.1e-6  	# tolerance relative
 Ndicho=30
 propDicho=0.5
 
-beta=0.2
-alpha=2.
-kappa=3.5
+beta=0.
+alpha=9.
+kappa=4.5
 #kappa=2.14251937166
 
 RKadaptatif=False
 NT=40000
 
-model='A'
+model='ON'
 approx=4
 choixRegu=1
 

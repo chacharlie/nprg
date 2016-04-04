@@ -47,6 +47,9 @@ for i in range(sizeIm):
 iR1re = interpolate.splrep(omegaRe,R1re,s=0)
 iR1im = interpolate.splrep(omegaIm,R1im,s=0)
 
+#omega = omegcol.real # ATTE?TION : pour plusomega, signe -
+
+####### Mars 2016 : ????
 omega = omegcol.real # ATTE?TION : pour plusomega, signe -
 
 R1col = interpolate.splev(omega,iR1re,der=0) + 1j*interpolate.splev(omega,iR1im,der=0)
