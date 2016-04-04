@@ -3,12 +3,12 @@ import numpy as np
 from numpy import polynomial as poly
 
 #Pour importer R1 si choixRegu==2
-omegaRangeDico={'0.01': 500.,'0.05':200.,'0.1':200.,'0.25':40.,'0.5':20.,'0.75':13.3333,'1.0':10,'5.0':20,'10.0':10}
+omegaRangeDico={'0.01': 500.,'0.05':200.,'0.07':142.857,'0.1':100.,'0.21':47.619,'0.25':40.,'0.5':50,'0.75':13.3333,'1.0':10,'5.0':20,'10.0':10}
 
 # parametres du regulateur
-choixRegu=1		# 1 : regulateur "mou", 2 : regulateur plus violent...
-alpha = 4.	# parametre du regulateur en impulsions
-beta = 0.		# parametre du regulateur en frequences
+choixRegu=2		# 1 : regulateur "mou", 2 : regulateur plus violent...
+alpha = 2.4	# parametre du regulateur en impulsions
+beta = 0.5		# parametre du regulateur en frequences
 
 #modele
 model='ON'	# 'A' or 'ON'
