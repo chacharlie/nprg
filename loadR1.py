@@ -50,7 +50,10 @@ iR1im = interpolate.splrep(omegaIm,R1im,s=0)
 #omega = omegcol.real # ATTE?TION : pour plusomega, signe -
 
 ####### Mars 2016 : les include dans data/ ont ete modifies
-omega = omegcol.real
+#omega = omegcol.real
+
+## testo
+omega = -omegcol.real
 
 R1col = interpolate.splev(omega,iR1re,der=0) + 1j*interpolate.splev(omega,iR1im,der=0)
 domegR1col = interpolate.splev(omega,iR1re,der=1) + 1j*interpolate.splev(omega,iR1im,der=1)

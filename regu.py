@@ -9,9 +9,16 @@ if choixRegu==2:
 
 
 # partie spatiale
-regu = alpha/(exp(q**2)-1.)
-regup = -regu**2*exp(q**2)/alpha
-regupp = 2.*regu**3*exp(2.*q**2)/alpha**2+regup
+if choiceReguQ == 0: #regu exponentiel
+	regu = alpha/(exp(q**2)-1.)
+	regup = -regu**2*exp(q**2)/alpha
+	regupp = 2.*regu**3*exp(2.*q**2)/alpha**2+regup
+elif choiceReguQ > 1: #regu litim d'ordre choiceRegu>1
+	nn = choiceReguQ
+	regu = alpha*(1-q**2)**nn/q**2
+	regup = -alpha*(nn*(1-q**2)**(nn-1)/q**2+(1-q**2)**nn/q**4) 
+	regupp = alpha*(nn*(nn-1)*(1-q**2)**(nn-2)/q**2+2*nn*(1-q**2)**(nn-1)/q**4+2*(1-q**2)**nn/q**6) 
+
 
 
 ########################## PARTIE FREQUENCE ##########################
@@ -23,6 +30,7 @@ if choixRegu==1:
 	dqR1 = 1j/(1j-beta*omeg)*regup
 	dqqR1 = 1j/(1j-beta*omeg)*regupp
 	domegR1 = +1j*beta/(1j-beta*omeg)**2*regu
+
 ## ancienne version (avant mars 2016)
 #	R1 = 1j/(1j+beta*omeg)*regu
 #	dqR1 = 1j/(1j+beta*omeg)*regup

@@ -21,6 +21,7 @@ def stepper(htry,y,dty):
 
 	while 1==1:
 		y_new,yerr,yerr2 = computeFlow853(y,dty,etaZ,etaX,h) #Take a step.
+	#	etaZ,etaX,rho0 = computeEta(y_new) #testEta
 		err = computeError853(yerr,yerr2,y,y_new,h)
 		varSuccess = control.success(err)
 		h = control.h
@@ -31,6 +32,7 @@ def stepper(htry,y,dty):
 		if (abs(h) <= 10**(-5)):
 			print "stepsize underflow in StepperDopr853, h=",h
 	
+
 	dty_new = eqFlow(y_new,etaZ,etaX,0)
 	dty = dty_new
 	y = y_new

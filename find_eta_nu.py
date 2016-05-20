@@ -11,7 +11,7 @@ maxNuNeg=[]
 
 NdichoPlot = matrixKappa.shape[0]
 
-for i in range(Ndicho):
+for i in range(NdichoPlot):
 	EtaZt=matrixEtaZ[i]
 	EtaXt=matrixEtaX[i]
 	#dtEtaZ = abs(gradient(EtaZt)/dt)

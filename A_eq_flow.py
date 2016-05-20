@@ -46,20 +46,30 @@ def eqFlow(VZX,etaZ,etaX,computeEta):
 	Zdyn = zeros((rho.size))
 	Zerror= zeros((rho.size))
 
-	s1 = -(etaZ*qR1+qdqR1+(2.-etaZ+etaX)*qomegdomegR1)
-	s12 = -(etaZ*qR1[::-1,:]+qdqR1[::-1,:]+(2.-etaZ+etaX)*qomegdomegR12)#s1[::-1,:] 
-	s2 = -(etaX*R2+qdqR2+(2-etaZ+etaX)*omegdomegR2)
+
+	if beta==0 and exact==True:
+		s = -(etaZ*regu+2.*qq*regup)
+	else:
+		s1 = -(etaZ*qR1+qdqR1+(2.-etaZ+etaX)*qomegdomegR1)
+		s12 = -(etaZ*qR1[::-1,:]+qdqR1[::-1,:]+(2.-etaZ+etaX)*qomegdomegR12)#s1[::-1,:] 
+		s2 = -(etaX*R2+qdqR2+(2-etaZ+etaX)*omegdomegR2)
 	
 	for k in range(Nrho):
-		h = qq*(R1+Z[k])+V[k]+2.*rho[k]*Vp[k]
-		homeg = h+1j*omeg*X[k]
-		f= qq*Zp[k]+3.*Vp[k]+2.*rho[k]*Vpp[k]
-		g = homeg*Xp[k]-X[k]*f
-		R2X=R2-X[k]
-	
-		Vdyn[k],Verror[k] = eqV(f,g,s1,s12,s2,homeg)
-		Zdyn[k],Zerror[k] = eqZ(rho[k],X[k],Xp[k],Z[k],Zp[k],Zpp[k],R2X,s1,s12,s2,f,homeg)
-		Xdyn[k],Xerror[k] = eqX(rho[k],X[k],Xp[k],Xpp[k],R2X,s1,s12,s2,f,h,homeg)
+		if beta==0 and exact==True:
+			h = qq*(regu+Z[k])+V[k]+2.*rho[k]*Vp[k]
+			f= qq*Zp[k]+3.*Vp[k]+2.*rho[k]*Vpp[k]
+			Vdyn[k],Verror[k] = eqVbeta0(f,s,h)
+			Zdyn[k],Zerror[k] = eqZbeta0(f,s,h,Z[k],Zp[k],Zpp[k],rho[k])
+			Xdyn[k],Xerror[k] = eqXbeta0(f,s,h,X[k],Xp[k],Xpp[k],rho[k])
+		else:	
+			h = qq*(R1+Z[k])+V[k]+2.*rho[k]*Vp[k]
+			homeg = h+1j*omeg*X[k]
+			f= qq*Zp[k]+3.*Vp[k]+2.*rho[k]*Vpp[k]
+			g = homeg*Xp[k]-X[k]*f
+			R2X=R2-X[k]
+			Vdyn[k],Verror[k] = eqV(f,g,s1,s12,s2,homeg)
+			Zdyn[k],Zerror[k] = eqZ(rho[k],X[k],Xp[k],Z[k],Zp[k],Zpp[k],R2X,s1,s12,s2,f,homeg)
+			Xdyn[k],Xerror[k] = eqX(rho[k],X[k],Xp[k],Xpp[k],R2X,s1,s12,s2,f,h,homeg)
 		
  	Vdim = (-2.+etaZ)*V+(-2.+dim+etaZ)*rho*Vp 
 	Zdim = etaZ*Z+(-2.+dim+etaZ)*rho*Zp
@@ -79,6 +89,37 @@ def eqFlow(VZX,etaZ,etaX,computeEta):
 	else:
 		return dtVZX.flatten()
 
+def eqVbeta0(f,s,h):
+# le 2*q provient du chgmt de variable qd on integre sur q au lieu de y
+	VdynTemp = -2.*q*(q**dim)*f*s/h**2
+	VdynNew= dot(VdynTemp,wQ)
+	return VdynNew,0
+
+def eqZbeta0(f,s,h,z,zp,zpp,rhok):
+	hp = z + regu + qq*regup	
+	dqqh = 2.*regup+qq*regupp
+
+	t1 = 2*rhok*f**2/h**2*(-hp+4./dim*qq*hp**2/h-2./dim*qq*dqqh)
+	t2 = 4.*rhok*zp*f/h*(1.-2./dim*qq*hp/h) 
+	t3 = 2./dim*rhok*zp**2*qq/h
+	t4 = -0.5*zp-rhok*zpp
+
+	ZdynTemp = 2.*q*2.*(q**dim)*s/h**2*(t1+t2+t3+t4)
+#	ZdynTemp = 2.*q*(q**dim)*s/h**2*(t1+t2+t3+t4) # factor2
+	ZdynNew= dot(ZdynTemp,wQ)
+	return ZdynNew,0
+
+def eqXbeta0(f,s,h,x,xp,xpp,rhok):
+	t1 = 3./2.*f**2/h**2*x*rhok
+	t2 = -4.*rhok*xp*f/h
+	t3 = 0.5*xp+rhok*xpp
+
+	XdynTemp = -2.*q*2.*(q**dim)*s/h**2*(t1+t2+t3) 
+#	XdynTemp = -2.*q*(q**dim)*s/h**2*(t1+t2+t3) #factor2
+	XdynNew= dot(XdynTemp,wQ)
+	return XdynNew,0
+
+
 def eqV(f,g,s1,s12,s2,homeg):
 	term1 = (g[::-1,:] + f*R2)*s1/(homeg[::-1,:]*homeg**2)
 	term2 = (g + f*R2)*s12/(homeg[::-1,:]**2*homeg)
@@ -92,6 +133,7 @@ def eqV(f,g,s1,s12,s2,homeg):
 	if abs(VdynNew.imag)>10**(-10.):
 		Verror=VdynNew.imag
 	return VdynNew.real,Verror
+
 
 def eqZ(rhok,Xk,Xpk,Zk,Zpk,Zppk,R2X,s1,s12,s2,f,homeg):
 	dqh = Zk + dqhnoZ	

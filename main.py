@@ -8,23 +8,34 @@ from global_variables import *
 from step_dicho import *
 from weigth_dicho import *
 
+if beta==0 and exact==True and model=='A':		
+	print 'Vous utilisez les equations deja integrees par rapport a omega.'
+
 Ndicho=30
 propDicho=0.5
 
-kmin=1.
-kmax=6.
+kmin=1.#4.#1.
+kmax=6.#9.#6.
 kappa=(kmin+kmax)/2.
 
-folderPath='results/March16/N'+str(int(NN))+'d'+str(int(dim))+'Nrho'+str(Nrho)+'NQ'+str(NQ)+'/'
+if dim==2 or dim==3 or dim==4:
+	dims = str(dim)
+else: 
+	dims = str(int(dim*10))
+
+Lrhos = "%.2f" % Lrho
+
+folderPath='results/March16/N'+str(int(NN))+'d'+dims+'Nrho'+str(Nrho)+'NQ'+str(NQ)+'/'
 str1=folderPath+model+'-'+str(approx)+'-'+str(Ndicho)+'-'
 if RKadaptatif:
 	str2=str(atol)+'-'+str(rtol)+'-'
 else:	
 	str2=str(NT)+'-'
 str3=str(Nomeg)+'-'+str(Lomeg)+'-'+str(beta)+'-'+str(alpha)+'-'+str(kappa)+'-'+str(choixRegu)+'-'\
-	+str(propDicho)+'-'+str(diffOrder)+'-'+str(edgeOrder)+'-Tmax'+str(T)
+	+str(propDicho)+'-'+str(diffOrder)+'-'+str(edgeOrder)+'-Tmax'+str(T)+'-'+str(choiceReguQ)\
+	+'-'+Lrhos
 
-fileName=str1+str2+str3
+fileName=str1+str2+str3+'testEta'#+'simpleLrho'+'factor2'#+'doubledLrho'+'step20'#+'test'
 
 etaZResults=[]
 etaXResults=[]

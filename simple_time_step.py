@@ -37,6 +37,9 @@ def computeEta(y):
 
 	B,Bp = etaZ10-A, etaX10-Ap
 	C,Cp = etaZ01-A, etaX01-Ap
+
+	if C!=0. and beta==0:
+		print 'WARNING, C=',C
 	
 	etaZ = (A*(1.-Cp)+C*A)/((1.-B)*(1.-Cp)-C*Bp)
 	etaX = (Ap+Bp*etaZ)/(1.-Cp)

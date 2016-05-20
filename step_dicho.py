@@ -39,7 +39,10 @@ def step_dicho(yinit):
 	    	if y[0]>0.:
 	    		phase=1
 	    		break
-	  	if y[0]<-0.7 and NN==1:
+	  	if y[0]<-0.7 and NN==1 and dim==3:
+	  		phase=0
+		  	break
+	  	if y[0]<-2. and NN==1 and dim<3:
 	  		phase=0
 		  	break
 		if y[0]<-1. and NN>1:
