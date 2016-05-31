@@ -8,22 +8,22 @@ omegaRangeDico={'0.01':1000,'0.02':500,'0.05':400,'0.07':142.857,'0.1':100.,'0.2
 # parametres du regulateur
 choixRegu=1		# 1 : regulateur "mou", 2 : regulateur plus violent...
 choiceReguQ=0	# 0 : regu expo, 2+ : regu litim d'ordre 2+	
-alpha = 2.	# parametre du regulateur en impulsions
+alpha = 2.5	# parametre du regulateur en impulsions
 beta = 0		# parametre du regulateur en frequences
 exact=True
 
 #modele
 model='A'	# 'A' or 'ON'
-approx=2	# (pour model A) 1: LPA', 2: Z complet, 3: X complet, 4: X,Z complets
+approx=1	# (pour model A) 1: LPA', 2: Z complet, 3: X complet, 4: X,Z complets
 
 # physique
 dim=3			# dimension d'espace
-NN=1. 			# dimension des spins
+NN=1 			# dimension des spins
 
 # numerique
-NQ = 50		# nombre de pas pour les impulsions
+NQ = 30		# nombre de pas pour les impulsions
 Nomeg = 200	# nombre de pas pour les frequences
-Nrho= 3*30	# nombre de pas pour le potentiel
+Nrho= 2*30	# nombre de pas pour le potentiel
 
 # Ordre des derivees en rho, et ordre des derivees au bord...
 diffOrder = 5 
@@ -31,7 +31,7 @@ edgeOrder = 5
 
 T = -30.		# taille maximale du domaine selon le temps de RG
 
-RKadaptatif=True
+RKadaptatif=False
 if RKadaptatif:
 	#Runge-Kutta adaptatif
 	dt0 = -1e-4		# nombre de pas de temps initial
@@ -53,8 +53,8 @@ if choixRegu==1:
 elif choixRegu==2:
 	Lomeg=omegaRangeDico[str(beta)]
 #Lrho = 0.0984*NN/(2**(-1-dim)*pi**((-dim/2))/math.gamma(dim/2))	# taille du domaine selon rho
-Lrho = 1.*0.0984*NN/(2**(-1-dim)*pi**((-dim/2))/math.gamma(dim/2))	# taille du domaine selon rho
-drho = Lrho/Nrho	# pas de potentiel
+Lrho = 15.#1.*0.0984*NN/(2**(-1-dim)*pi**((-dim/2))/math.gamma(dim/2))	# taille du domaine selon rho
+drho = Lrho/(Nrho-1)	# pas de potentiel
 
 
 # variables globales

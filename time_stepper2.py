@@ -20,9 +20,9 @@ def stepper(htry,y,dty):
 	etaZ,etaX,rho0 = computeEta(y)
 
 	while 1==1:
-		y_new,yerr,yerr2 = computeFlow853(y,dty,etaZ,etaX,h) #Take a step.
+		y_new,yerr,yerr2,yerrZX = computeFlow853(y,dty,etaZ,etaX,h) #Take a step.
 	#	etaZ,etaX,rho0 = computeEta(y_new) #testEta
-		err = computeError853(yerr,yerr2,y,y_new,h)
+		err = computeError853(yerr,yerr2,y,y_new,h,yerrZX)
 		varSuccess = control.success(err)
 		h = control.h
 		if varSuccess:
@@ -58,50 +58,67 @@ def computeEta(y):
 def computeFlow853(y,dty,etaZ,etaX,h):
 	ytemp=y+h*a21*dty
 	k2 = eqFlow(ytemp,etaZ,etaX,0)
+#	kz2,kx2,_ = computeEta(ytemp)
 	
 	ytemp=y+h*(a31*dty+a32*k2)
 	k3 = eqFlow(ytemp,etaZ,etaX,0)
+#	kz3,kx3,_ = computeEta(ytemp)
 	
 	ytemp=y+h*(a41*dty+a43*k3)
 	k4 = eqFlow(ytemp,etaZ,etaX,0)
+#	kz4,kx4,_ = computeEta(ytemp)
 	
 	ytemp=y+h*(a51*dty+a53*k3+a54*k4)
 	k5 = eqFlow(ytemp,etaZ,etaX,0)
+#	kz5,kx5,_ = computeEta(ytemp)
 	
 	ytemp=y+h*(a61*dty+a64*k4+a65*k5)
 	k6 = eqFlow(ytemp,etaZ,etaX,0)
+#	kz6,kx6,_ = computeEta(ytemp)
 	
 	ytemp=y+h*(a71*dty+a74*k4+a75*k5+a76*k6)
 	k7 = eqFlow(ytemp,etaZ,etaX,0)
+#	kz7,kx7,_ = computeEta(ytemp)
 	
 	ytemp=y+h*(a81*dty+a84*k4+a85*k5+a86*k6+a87*k7)
 	k8 = eqFlow(ytemp,etaZ,etaX,0)
+#	kz8,kx8,_ = computeEta(ytemp)
 	
 	ytemp=y+h*(a91*dty+a94*k4+a95*k5+a96*k6+a97*k7+a98*k8)
 	k9 = eqFlow(ytemp,etaZ,etaX,0)
+#	kz9,kx9,_ = computeEta(ytemp)
 	
 	ytemp=y+h*(a101*dty+a104*k4+a105*k5+a106*k6+a107*k7+a108*k8+a109*k9)
 	k10 =eqFlow(ytemp,etaZ,etaX,0)
+#	kz10,kx10,_ = computeEta(ytemp)
 	
 	ytemp=y+h*(a111*dty+a114*k4+a115*k5+a116*k6+a117*k7+a118*k8+a119*k9+a1110*k10)
 	k2 = eqFlow(ytemp,etaZ,etaX,0)
+#	kz2,kx2,_ = computeEta(ytemp)
 	
 	ytemp=y+h*(a121*dty+a124*k4+a125*k5+a126*k6+a127*k7+a128*k8+a129*k9+a1210*k10+a1211*k2)
 	k3 = eqFlow(ytemp,etaZ,etaX,0)
+#	kz3,kx3,_ = computeEta(ytemp)
 	
 	k4 = b1*dty+b6*k6+b7*k7+b8*k8+b9*k9+b10*k10+b11*k2+b12*k3
+#	kz4,kx4,_ = computeEta(ytemp)
 	y_new=y+h*k4
+
+#	yerrZ=kz4-bhh1*etaZ-bhh2*kz9-bhh3*kz3
+#	yerrX=kx4-bhh1*etaZ-bhh2*kx9-bhh3*kx3
+#	yerrZX = ((yerrZ+yerrX)/atol)**2
 
 	yerr=k4-bhh1*dty-bhh2*k9-bhh3*k3
 	yerr2=er1*dty+er6*k6+er7*k7+er8*k8+er9*k9+er10*k10+er11*k2+er12*k3
 
-	return y_new,yerr,yerr2
+	return y_new,yerr,yerr2,0.
 
 
-def computeError853(yerr,yerr2,y,y_new,h):
+def computeError853(yerr,yerr2,y,y_new,h,yerrZX):
 	# Use Verr to compute norm of the scaled error estimate. A value less than one means the step was successful
 	
-	err=0.;err2=0.
+	err=yerrZX#0.
+	err2=0.
 	Nerr=size(y)
 	for i in range(Nerr):		# a ameliorer : pas besoin de faire une boucle...
 		sk = atol+rtol*max(abs(y[i]),abs(y_new[i]))

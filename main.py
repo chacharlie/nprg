@@ -35,7 +35,7 @@ str3=str(Nomeg)+'-'+str(Lomeg)+'-'+str(beta)+'-'+str(alpha)+'-'+str(kappa)+'-'+s
 	+str(propDicho)+'-'+str(diffOrder)+'-'+str(edgeOrder)+'-Tmax'+str(T)+'-'+str(choiceReguQ)\
 	+'-'+Lrhos
 
-fileName=str1+str2+str3+'testEta'#+'simpleLrho'+'factor2'#+'doubledLrho'+'step20'#+'test'
+fileName=str1+str2+str3
 
 etaZResults=[]
 etaXResults=[]
@@ -68,6 +68,13 @@ for i in range(Ndicho):
     Xinit = ones((rho.size))
     #Xinit= np.array([0.00350089, 0.00353313, 0.00356449, 0.0035949, 0.00362429, 0.00365258, 0.0036797, 0.00370562, 0.00373026, 0.00375359, 0.00377559, 0.00379622, 0.00381548, 0.00383337, 0.00384988, 0.00386503, 0.00387885, 0.00389138, 0.00390264, 0.00391268, 0.00392156, 0.00392932, 0.00393603, 0.00394174, 0.00394652, 0.00395041, 0.0039535, 0.00395583, 0.00395747, 0.00395847])
     yInit=np.array([Vinit,Zinit,Xinit])
+
+#  if i == 0:
+#    f1=plt.figure()
+#    ax = f1.add_subplot(111)
+#    ax.plot(rho,Vinit)
+#    plt.show()
+
     phase,etaZPlot,etaXPlot,yPlot,tPlot=step_dicho(yInit.flatten()) #phase=0 : low temp, =1, high temp
   
   if phase==0:

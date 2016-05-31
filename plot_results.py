@@ -63,7 +63,7 @@ if afficheVZX:
 if afficheNu:
 	f6=plt.figure()
 	ax6=f6.add_subplot(111)
-	indexVj=0
+	indexVj=10
 	for istep in range(NdichoPlot):
 		Vj=[]
 	  	ti=matrixT[istep]
@@ -72,7 +72,7 @@ if afficheNu:
 		dti=gradient(ti)
 		for k in range(len(matrixy[istep])):
 			Vj.append(matrixy[istep][k][indexVj].real)
-		dlndVj=gradient(log(abs(gradient(Vj,dti)+10**(-30))),dti)
+		dlndVj=gradient(log(abs(gradient(Vj,dti)+10**(-25))),dti)
 		
 		ax6.plot(ti,-1./dlndVj,marker='o')
 	

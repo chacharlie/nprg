@@ -10,13 +10,13 @@ else:
 NN=1
 
 # numerique
-NQ = 50         # nombre de pas pour les impulsions
+NQ = 30         # nombre de pas pour les impulsions
 Nomeg = 200     # nombre de pas pour les frequences
-Nrho = 3*30        # nombre de pas pour le potentiel
+Nrho = 2*30        # nombre de pas pour le potentiel
 
 # geometrique
 LQ = 4.2                # taille du domaine selon q
-Lrho = 1*0.0984*NN/(2**(-1-dim)*pi**((-dim/2))/math.gamma(dim/2)) # taille du domaine selon rho
+Lrho = 15.#1*0.0984*NN/(2**(-1-dim)*pi**((-dim/2))/math.gamma(dim/2)) # taille du domaine selon rho
 Lrhos = "%.2f" % Lrho
 drho = Lrho/Nrho        # pas de potentiel
 
@@ -30,13 +30,13 @@ rtol = 0*.1e-6  	# tolerance relative
 Ndicho=30
 propDicho=0.5
 
-beta=0
+beta=0.
 alpha=2.
 kappa=3.5#1.25
 #kappa=2.14251937166
 
 RKadaptatif=True
-NT=80000
+NT=40000
 
 model='A'
 approx=2
@@ -74,7 +74,7 @@ else:
 
 filePath=str1+str2+str3
 
-fileName = folderPath + filePath+'testEta'# +'simpleLrho'#+'simpleInteg' #+ 'doubledLrho'# +'modifiedV0' #+'doubledLrho'# + 'test'
+fileName = folderPath + filePath# +'simpleLrho'#+'simpleInteg' #+ 'doubledLrho'# +'modifiedV0' #+'doubledLrho'# + 'test'
 
 data=load(fileName+'.npz')
 matrixEtaZ=data['etaZResults']

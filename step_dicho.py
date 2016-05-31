@@ -37,9 +37,11 @@ def step_dicho(yinit):
 		elif model=='A':
 			yp=d_rho(y[0:Nrho])
 	    	if y[0]>0.:
+			print 'y>0'
 	    		phase=1
 	    		break
 	  	if y[0]<-0.7 and NN==1 and dim==3:
+			print 'y<-0.7'
 	  		phase=0
 		  	break
 	  	if y[0]<-2. and NN==1 and dim<3:

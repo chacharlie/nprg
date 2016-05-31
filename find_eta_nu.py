@@ -81,7 +81,8 @@ for tl in ax2.get_yticklabels():
     tl.set_color('r')
 ax2.legend(loc='upper right')
 
+mZ= maxEtaZ[-1]
 
 print maxEtaZ[-1],maxEtaX[-1],(maxNuPos[-1]+maxNuNeg[-1])/2.
-
+print 'etaZ={0:.6f}, etaX={1:.6f}, nu={2:.6f}'.format(maxEtaZ[-1],maxEtaX[-1],(maxNuPos[-1]+maxNuNeg[-1])/2.)
 plt.show()
