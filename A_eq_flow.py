@@ -12,6 +12,8 @@ def eqFlow(VZX,etaZ,etaX,computeEta):
 	Vpp=d2_rho(V)
 	if approx==1:
 		X = 1.*ones((rho.size))
+#		X = 1.*ones((rho.size))+alpha*beta # modifX
+#		X = DD*ones((rho.size)) # modifX2
 		Xp = zeros((rho.size))
 		Xpp = zeros((rho.size))
 		Z = 1.*ones((rho.size))
@@ -51,8 +53,10 @@ def eqFlow(VZX,etaZ,etaX,computeEta):
 		s = -(etaZ*regu+2.*qq*regup)
 	else:
 		s1 = -(etaZ*qR1+qdqR1+(2.-etaZ+etaX)*qomegdomegR1)
-		s12 = -(etaZ*qR1[::-1,:]+qdqR1[::-1,:]+(2.-etaZ+etaX)*qomegdomegR12)#s1[::-1,:] 
+#		s12 = -(etaZ*qR1[::-1,:]+qdqR1[::-1,:]+(2.-etaZ+etaX)*qomegdomegR12)#s1[::-1,:] 
+		s12 = -(etaZ*qR1[::-1,:]+qdqR1[::-1,:]-(2.-etaZ+etaX)*qomegdomegR12) # r2s12modif
 		s2 = -(etaX*R2+qdqR2+(2-etaZ+etaX)*omegdomegR2)
+#		s2 = -((etaX+2.*aa)*R2+qdqR2+(2-etaZ+etaX)*omegdomegR2)	# r2modif
 	
 	for k in range(Nrho):
 		if beta==0 and exact==True:
@@ -130,8 +134,9 @@ def eqV(f,g,s1,s12,s2,homeg):
 	VdynNew= dot(dot(VdynTemp,wQ),wOmeg)*1./(2.*pi)
   
 	Verror=0.
-	if abs(VdynNew.imag)>10**(-10.):
+	if abs(VdynNew.imag)>1e-8:
 		Verror=VdynNew.imag
+		print 'Imaginary part of V: {0}'.format(Verror)
 	return VdynNew.real,Verror
 
 
@@ -154,8 +159,9 @@ def eqZ(rhok,Xk,Xpk,Zk,Zpk,Zppk,R2X,s1,s12,s2,f,homeg):
 	ZdynNew= dot(dot(ZdynTemp,wQ),wOmeg)*1./(2.*pi)
 	
 	Zerror=0.
-	if abs(ZdynNew.imag)>10**(-10.):
+	if abs(ZdynNew.imag)>1e-8:
 		Zerror=ZdynNew.imag
+		print 'Imaginary part of Z: {0}'.format(Zerror)
 	return ZdynNew.real,Zerror
 	
 def eqX(rhok,Xk,Xpk,Xppk,R2X,s1,s12,s2,f,h,homeg):
@@ -175,8 +181,9 @@ def eqX(rhok,Xk,Xpk,Xppk,R2X,s1,s12,s2,f,h,homeg):
 	XdynNew= dot(dot(XdynTemp,wQ),wOmeg)*1./(2.*pi)
 
 	Xerror=0.
-	if abs(XdynNew.imag)>10**(-10.):
+	if abs(XdynNew.imag)>1e-8:
   		Xerror=XdynNew.imag
+		print 'Imaginary part of X: {0}'.format(Xerror)
 	return XdynNew.real,Xerror
 
 def findZX0(V,Vp,Zp,Xp,dtV,dtZ,dtX):

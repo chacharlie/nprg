@@ -12,11 +12,11 @@ NN=1
 # numerique
 NQ = 30         # nombre de pas pour les impulsions
 Nomeg = 200     # nombre de pas pour les frequences
-Nrho = 2*30        # nombre de pas pour le potentiel
+Nrho = 1*30        # nombre de pas pour le potentiel
 
 # geometrique
 LQ = 4.2                # taille du domaine selon q
-Lrho = 15.#1*0.0984*NN/(2**(-1-dim)*pi**((-dim/2))/math.gamma(dim/2)) # taille du domaine selon rho
+Lrho = 2.#1*0.0984*NN/(2**(-1-dim)*pi**((-dim/2))/math.gamma(dim/2)) # taille du domaine selon rho
 Lrhos = "%.2f" % Lrho
 drho = Lrho/Nrho        # pas de potentiel
 
@@ -30,7 +30,7 @@ rtol = 0*.1e-6  	# tolerance relative
 Ndicho=30
 propDicho=0.5
 
-beta=0.
+beta=1.
 alpha=2.
 kappa=3.5#1.25
 #kappa=2.14251937166
@@ -39,7 +39,7 @@ RKadaptatif=True
 NT=40000
 
 model='A'
-approx=2
+approx=1
 choixRegu=1
 choiceReguQ=0
 
@@ -47,6 +47,8 @@ edgeOrder5=True
 diffOrder=5
 edgeOrder=5
 T=-30.
+
+dt= T/NT
 
 afficheNu=True
 afficheEta=True
@@ -72,7 +74,7 @@ if RKadaptatif:
 else:	
 	str2=str(NT)+'-'
 
-filePath=str1+str2+str3
+filePath=str1+str2+str3+'r2s12modif1'#modifX24.0'
 
 fileName = folderPath + filePath# +'simpleLrho'#+'simpleInteg' #+ 'doubledLrho'# +'modifiedV0' #+'doubledLrho'# + 'test'
 

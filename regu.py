@@ -45,11 +45,15 @@ elif choixRegu==2:
 
 ###### R2 #######
 if choixRegu==1:
-	R2 =-qq*beta/(1+beta**2*omeg**2)*regu
+#	R2 =-qq*beta/(1+beta**2*omeg**2)*regu
+	R2 =-qq**aa*beta/(1+beta**2*omeg**2)*regu	# r2modif
 	R21= -1.+R2
-	dqR2 =-beta/(1+beta**2*omeg**2)*(regup*qq+regu)
-	dqqR2 =-beta/(1+beta**2*omeg**2)*(regupp*qq+2.*regup)
-	domegR2 = +2*beta**3*omeg/(1+beta**2*omeg**2)**2*regu*qq
+#	dqR2 =-beta/(1+beta**2*omeg**2)*(regup*qq+regu)
+#	dqqR2 =-beta/(1+beta**2*omeg**2)*(regupp*qq+2.*regup)
+#	domegR2 = +2*beta**3*omeg/(1+beta**2*omeg**2)**2*regu*qq
+	dqR2 =-beta/(1+beta**2*omeg**2)*(regup*qq**aa+aa*qq**(aa-1)*regu)	#r2modif
+	dqqR2 =-beta/(1+beta**2*omeg**2)*(regupp*qq**aa+2.*aa*qq**(aa-1)*regup+aa*(aa-1)*qq**(aa-2)*regu)#r2modif
+	domegR2 = +2*beta**3*omeg/(1+beta**2*omeg**2)**2*regu*qq**aa#r2modif
 ## ancienne version (avant mars 2016)
 	#R2 = qq*beta/(1+beta**2*omeg**2)*regu
 	#R21= -1.+R2

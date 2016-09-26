@@ -90,6 +90,9 @@ def step_dicho(yinit):
 		if(stepCount%(5)==0):
 			if min(yp)<0:
 	    			print "y is not monotonous at t=",t
+				print "phase arbitrarily set to 0"
+				phase=0
+				break
 			etaZPlot.append(etaZ)
 			etaXPlot.append(etaX)
 			yplot.append(y)

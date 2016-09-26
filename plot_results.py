@@ -1,5 +1,6 @@
 from pylab import *
 from numpy import *
+from scipy import interpolate
 import  matplotlib.pyplot as plt
 
 from load_results import *
@@ -12,7 +13,14 @@ if printKappa:
 	for i,m in enumerate(matrixKappa):
 		print i,Decimal(m[0]),Decimal(m[1])
 
-if model=='A':
+tmin=0.
+for i in range(NdichoPlot):
+	ti=matrixT[i]  
+  	if ti[-1]<tmin:
+    		tmin=ti[-1]
+
+
+if model=='A' and afficheVZX:
 	f4=plt.figure()
 	f5=plt.figure()
 	ax4= f4.add_subplot(111)
@@ -63,22 +71,50 @@ if afficheVZX:
 if afficheNu:
 	f6=plt.figure()
 	ax6=f6.add_subplot(111)
+#	fig,ax = plt.subplots()
 	indexVj=10
+	
 	for istep in range(NdichoPlot):
 		Vj=[]
-	  	ti=matrixT[istep]
+	  	ti=np.array(matrixT[istep])
 		if len(ti)<2:
 			break
 		dti=gradient(ti)
 		for k in range(len(matrixy[istep])):
 			Vj.append(matrixy[istep][k][indexVj].real)
-		dlndVj=gradient(log(abs(gradient(Vj,dti)+10**(-25))),dti)
-		
-		ax6.plot(ti,-1./dlndVj,marker='o')
-	
+		Vj = np.array(Vj) # correct
+		dlndVj=gradient(log(abs(gradient(Vj,dti)+10**(-25))),dti) #correct
+
+##		tgrid=linspace(0,-ti[-1],100)
+##		Vtck = interpolate.splrep(-ti,Vj)
+##		Vp = interpolate.splev(tgrid,Vtck,der=1)
+##		VV = interpolate.splev(tgrid,Vtck,der=0)
+##		logVp = log(abs(Vp+1e-25))
+##		logVptck = interpolate.splrep(tgrid,logVp)
+##		dlndV = interpolate.splev(tgrid,logVptck,der=1)
+#       	
+#		tlen=len(ti)
+#		mask = np.index_exp[2000:3200]
+#		tshort=-ti[mask]
+#		print tshort[0],tshort[-1],tlen
+#
+#		Vpol = np.polyfit(tshort,Vj[mask],deg=12)
+#		Vpolp = np.polyder(Vpol)
+#		logV = log(abs(np.polyval(Vpolp,tshort)+1e-25))
+#		logVpol = np.polyfit(tshort,logV,10)
+#		dlndVpol = np.polyder(logVpol)
+#		dlndV = np.polyval(dlndVpol,tshort)
+
+      		ax6.plot(ti,-1./dlndVj,'o') #correct
+#		ax6.plot(tshort,1./dlndV,'-')
+
+
 	ax6.set_title('Nu')
 	ax6.set_ylim([0,1])
 	ax6.set_xlim([0,tmin])
+
+#	ax.set_xlim([0,log(-tmin)])
+
 
 #if afficheNu==True:
 #	f6=plt.figure()

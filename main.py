@@ -14,8 +14,8 @@ if beta==0 and exact==True and model=='A':
 Ndicho=30
 propDicho=0.5
 
-kmin=1.#4.#1.
-kmax=6.#9.#6.
+kmin=1.#1.
+kmax=6.#6.
 kappa=(kmin+kmax)/2.
 
 if dim==2 or dim==3 or dim==4:
@@ -35,7 +35,7 @@ str3=str(Nomeg)+'-'+str(Lomeg)+'-'+str(beta)+'-'+str(alpha)+'-'+str(kappa)+'-'+s
 	+str(propDicho)+'-'+str(diffOrder)+'-'+str(edgeOrder)+'-Tmax'+str(T)+'-'+str(choiceReguQ)\
 	+'-'+Lrhos
 
-fileName=str1+str2+str3
+fileName=str1+str2+str3+'r2s12modif'+str(aa)#+'modifX2'+str(DD)
 
 etaZResults=[]
 etaXResults=[]
@@ -66,6 +66,8 @@ for i in range(Ndicho):
     Zinit= ones((rho.size))
     #Zinit= np.array([1.00315, 1.00867, 1.0141, 1.01942, 1.02464, 1.02973, 1.03468, 1.03947, 1.0441, 1.04855, 1.05282, 1.05689, 1.06076, 1.06443, 1.06788, 1.07112, 1.07415, 1.07697, 1.07958, 1.08198, 1.08418, 1.08618, 1.08799, 1.08962, 1.09108, 1.09237, 1.0935, 1.09448, 1.09532, 1.09603])
     Xinit = ones((rho.size))
+#    Xinit = ones((rho.size))+alpha*beta	# modif X
+#    Xinit = DD*ones((rho.size))			# modif X2
     #Xinit= np.array([0.00350089, 0.00353313, 0.00356449, 0.0035949, 0.00362429, 0.00365258, 0.0036797, 0.00370562, 0.00373026, 0.00375359, 0.00377559, 0.00379622, 0.00381548, 0.00383337, 0.00384988, 0.00386503, 0.00387885, 0.00389138, 0.00390264, 0.00391268, 0.00392156, 0.00392932, 0.00393603, 0.00394174, 0.00394652, 0.00395041, 0.0039535, 0.00395583, 0.00395747, 0.00395847])
     yInit=np.array([Vinit,Zinit,Xinit])
 
