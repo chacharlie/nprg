@@ -35,7 +35,7 @@ str3=str(Nomeg)+'-'+str(Lomeg)+'-'+str(beta)+'-'+str(alpha)+'-'+str(kappa)+'-'+s
 	+str(propDicho)+'-'+str(diffOrder)+'-'+str(edgeOrder)+'-Tmax'+str(T)+'-'+str(choiceReguQ)\
 	+'-'+Lrhos
 
-fileName=str1+str2+str3+'r2s12modif'+str(aa)#+'modifX2'+str(DD)
+fileName=str1+str2+str3+'testmodeleAbeta0'#'r2s12modif'+str(aa)#+'modifX2'+str(DD)
 
 etaZResults=[]
 etaXResults=[]

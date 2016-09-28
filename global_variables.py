@@ -9,8 +9,8 @@ omegaRangeDico={'0.01':1000,'0.02':500,'0.05':400,'0.07':142.857,'0.1':100.,'0.2
 choixRegu=1		# 1 : regulateur "mou", 2 : regulateur plus violent...
 choiceReguQ=0	# 0 : regu expo, 2+ : regu litim d'ordre 2+	
 alpha = 2.	# parametre du regulateur en impulsions
-beta = 1.		# parametre du regulateur en frequences
-exact= False
+beta = 0		# parametre du regulateur en frequences
+exact= True
 aa = 1
 DD = 4.
 
@@ -33,7 +33,7 @@ edgeOrder = 5
 
 T = -30.		# taille maximale du domaine selon le temps de RG
 
-RKadaptatif=True
+RKadaptatif=False
 if RKadaptatif:
 	#Runge-Kutta adaptatif
 	dt0 = -1e-4		# nombre de pas de temps initial
@@ -55,7 +55,7 @@ if choixRegu==1:
 elif choixRegu==2:
 	Lomeg=omegaRangeDico[str(beta)]
 #Lrho = 0.0984*NN/(2**(-1-dim)*pi**((-dim/2))/math.gamma(dim/2))	# taille du domaine selon rho
-Lrho = 8.#1.*0.0984*NN/(2**(-1-dim)*pi**((-dim/2))/math.gamma(dim/2))	# taille du domaine selon rho
+Lrho = 15.#1.*0.0984*NN/(2**(-1-dim)*pi**((-dim/2))/math.gamma(dim/2))	# taille du domaine selon rho
 drho = Lrho/(Nrho-1)	# pas de potentiel
 
 
